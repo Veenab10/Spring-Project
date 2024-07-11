@@ -1,51 +1,3 @@
-let fieldsChecks = {
-    "firstName": false,
-    "lastName": false,
-    "contactNumber": false,
-    "alternativeContactNumber": false,
-    "address": false,
-};
-
-// Function to initialize fieldsChecks based on existing data
-function initializeFieldsChecks() {
-    // Example assuming signupdto is populated from server-side or other source
-    if (signupdto.firstName && signupdto.firstName.length >= 3 && signupdto.firstName.length < 30 && /^[A-Za-z]+$/.test(signupdto.firstName)) {
-        fieldsChecks["firstName"] = true;
-    }
-    if (signupdto.lastName && signupdto.lastName.length >= 1 && signupdto.lastName.length <= 30 && /^[A-Za-z]+$/.test(signupdto.lastName)) {
-        fieldsChecks["lastName"] = true;
-    }
-    if (signupdto.contactNumber && /^[6-9]\d{9}$/.test(signupdto.contactNumber)) {
-        fieldsChecks["contactNumber"] = true;
-    }
-    if (signupdto.alternativeContactNumber && /^[6-9]\d{9}$/.test(signupdto.alternativeContactNumber)) {
-        fieldsChecks["alternativeContactNumber"] = true;
-    }
-    if (signupdto.address && signupdto.address.length >= 3 && signupdto.address.length <= 300) {
-        fieldsChecks["address"] = true;
-    }
-}
-
-// Call initializeFieldsChecks when the page loads or when signupdto is set
-initializeFieldsChecks();
-
-// Function to validate all fields and enable/disable signup button
-function validate() {
-    let isValid = true;
-
-    // Check each field validity
-    for (let field in fieldsChecks) {
-        if (!fieldsChecks[field]) {
-            isValid = false;
-            break;
-        }
-    }
-
-    // Enable/disable submit button based on overall form validity
-    document.getElementById("submit").disabled = !isValid;
-}
-
-// Function to validate first name
 function firstNameValidation() {
     let element = document.getElementById("firstName");
     let error = document.getElementById("firstNameError");
@@ -60,17 +12,95 @@ function firstNameValidation() {
         fieldsChecks["firstName"] = false;
     }
 
-    validate();
+    validate(); // Call validate to update the submit button state
 }
 
-// Similar validation functions for lastName, contactNumber, alternativeContactNumber, address...
+function lastNameValidation() {
+    let element = document.getElementById("lastName");
+    let error = document.getElementById("lastNameError");
+    let nameRegex = /^[A-Za-z]+$/;
 
-// Add event listeners to each input field to validate on blur or change
+    if (element.value.length >= 3 && element.value.length < 30 && nameRegex.test(element.value)) {
+        error.innerHTML = "";
+        fieldsChecks["lastName"] = true;
+    } else {
+        error.innerHTML = "Invalid last name. Should be alphabetic characters only and length should be between 3 and 30.";
+        error.style.color = "red";
+        fieldsChecks["lastName"] = false;
+    }
+
+    validate(); // Call validate to update the submit button state
+}
+
+function contactNumberValidation() {
+    let element = document.getElementById("contactNumber");
+    let error = document.getElementById("contactNumberError");
+    let numberRegex = /^[6-9]\d{9}$/;
+
+    if (numberRegex.test(element.value)) {
+        error.innerHTML = "";
+        fieldsChecks["contactNumber"] = true;
+    } else {
+        error.innerHTML = "Invalid contact number. Should be 10 digits starting with 6, 7, 8, or 9.";
+        error.style.color = "red";
+        fieldsChecks["contactNumber"] = false;
+    }
+
+    validate(); // Call validate to update the submit button state
+}
+
+function alternateContactNumberValidation() {
+    let element = document.getElementById("alternativeContactNumber");
+    let error = document.getElementById("alternativeContactError");
+    let numberRegex = /^[6-9]\d{9}$/;
+
+    if (element.value === "" || numberRegex.test(element.value)) {
+        error.innerHTML = "";
+        fieldsChecks["alternativeContactNumber"] = true;
+    } else {
+        error.innerHTML = "Invalid alternative contact number. Should be empty or 10 digits starting with 6, 7, 8, or 9.";
+        error.style.color = "red";
+        fieldsChecks["alternativeContactNumber"] = false;
+    }
+
+    validate(); // Call validate to update the submit button state
+}
+
+function addressValidation() {
+    let element = document.getElementById("address");
+    let error = document.getElementById("addressError");
+
+    if (element.value.length >= 3 && element.value.length <= 300) {
+        error.innerHTML = "";
+        fieldsChecks["address"] = true;
+    } else {
+        error.innerHTML = "Invalid address. Length should be between 3 and 300 characters.";
+        error.style.color = "red";
+        fieldsChecks["address"] = false;
+    }
+
+    validate(); // Call validate to update the submit button state
+}
+
+
 document.getElementById("firstName").addEventListener("blur", firstNameValidation);
 document.getElementById("lastName").addEventListener("blur", lastNameValidation);
 document.getElementById("contactNumber").addEventListener("blur", contactNumberValidation);
 document.getElementById("alternativeContactNumber").addEventListener("blur", alternateContactNumberValidation);
 document.getElementById("address").addEventListener("blur", addressValidation);
 
-// Call validate on page load to set initial state of submit button
-validate();
+
+function validate() {
+    let isValid = true;
+
+    // Check each field validity
+    for (let field in fieldsChecks) {
+        if (!fieldsChecks[field]) {
+            isValid = false;
+            break;
+        }
+    }
+
+    // Enable/disable submit button based on overall form validity
+    document.getElementById("submit").disabled = !isValid;
+}

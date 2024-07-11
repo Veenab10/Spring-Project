@@ -53,8 +53,10 @@ public class EditUserProfileController {
         if (updatedUser != null) {
             // model.addAttribute("signupDto", updatedUser);
             model.addAttribute("signupDto", updatedUser);
+            System.out.println("SignupDto Details:"+signupDto);
             model.addAttribute("profileMessage", "Profile updated successfully");
             return "EditUserProfile";
+           // return "HomePage";
         }
         model.addAttribute("profileError", "Error updating profile");
         return "HomePage";

@@ -16,7 +16,7 @@
     </div>
 </nav>
 
-<form action="edit-profile" method="post">
+<form action="upload" method="post" enctype="multipart/form-data">
 
     <div class="d-flex justify-content-center mt-3 mb-3 align-items-center vh-5">
         <div class="card" style="width: 30rem;">
@@ -25,7 +25,7 @@
 
                 <strong style="color:green"/>${profileMessage}</strong>
                 <strong style="color:green"/>${profileError}</strong>
-                <strong style="color:green"/>${signupDto}</strong>
+
 
                 <div class="form-group p-3">
                     <label for="firstName">First Name</label>
@@ -62,6 +62,14 @@
                     <textarea class="form-control" placeholder="Enter address here" id="address" onblur="addressValidation()" name="address">${signupdto.address}</textarea>
                     <span id="addressError"></span>
                 </div>
+
+
+
+                        <div class="form-group p-3">
+                            <label for="fileUpload">Upload File</label>
+                            <input type="file" class="form-control" id="file" name="file">
+                        </div>
+
 
 
                 <div class="form-group p-3">

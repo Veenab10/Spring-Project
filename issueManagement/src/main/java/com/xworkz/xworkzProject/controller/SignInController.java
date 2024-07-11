@@ -3,6 +3,9 @@ package com.xworkz.xworkzProject.controller;
 import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.service.AccountLockService;
 import com.xworkz.xworkzProject.model.service.SignInService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +18,11 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
+@Slf4j
 @RequestMapping("")
 public class SignInController {
 
+    private static final Logger log = LoggerFactory.getLogger(SignInController.class);
     @Autowired
     SignInService signInService;
 
@@ -29,6 +34,7 @@ public class SignInController {
 
     public SignInController() {
         System.out.println("Created SignInController");
+        log.info("Created SignInController");
     }
 
     @GetMapping("/signIn")
@@ -60,6 +66,7 @@ public class SignInController {
                 accountLockService.lockAccount(emailId); // Lock account after 3 failed attempts
                 model.addAttribute("error", "Your account is locked due to too many failed attempts.");
                 model.addAttribute("accountLocked", true);
+                return "SignIn";
             } else {
                 model.addAttribute("failed", "Invalid email id and password. Attempts: " + failedAttempts);
                 model.addAttribute("accountLocked", false);
