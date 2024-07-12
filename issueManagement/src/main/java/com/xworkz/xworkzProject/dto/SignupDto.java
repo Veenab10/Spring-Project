@@ -185,7 +185,16 @@ public class SignupDto {
         this.failedAttempts = failedAttempts;
     }
 
+    @Column(name = "image_name")
+    private String imageName;
 
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     @Override
     public String toString() {
@@ -205,7 +214,7 @@ public class SignupDto {
                 ", accountLocked=" + accountLocked +
                 ", failedAttempts=" + failedAttempts +
                 ", password='" + password + '\'' +
-
+                ", imageName='" + imageName + '\'' +
                 '}';
     }
 }

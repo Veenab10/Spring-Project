@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Repository
 public class EditUserProfileRepoImpl implements EditUserProfileRepo {
@@ -19,30 +20,65 @@ public class EditUserProfileRepoImpl implements EditUserProfileRepo {
 
     @Override
     public SignupDto findByEmailId(String emailId) {
-        System.out.println("running findById method in EditUserProfileRepoImpl.. ");
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
-        EntityTransaction transaction=entityManager.getTransaction();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        try{
-            String query="select s  from SignupDto s  where s.emailId=:emailId";
-            Query query1=entityManager.createQuery(query);
-            query1.setParameter("emailId",emailId);
-            SignupDto  singleResult= (SignupDto) query1.getSingleResult();
-            transaction.commit();
-            return singleResult;
-        }
+        try {
+            String query = "SELECT s FROM SignupDto s WHERE s.emailId = :emailId";
+            TypedQuery<SignupDto> typedQuery = entityManager.createQuery(query, SignupDto.class);
+            typedQuery.setParameter("emailId", emailId);
 
-        catch (PersistenceException persistenceException)
-        {
-            persistenceException.printStackTrace();
+            // Use getResultList() instead of getSingleResult()
+            List<SignupDto> results = typedQuery.getResultList();
+
+            if (results.isEmpty()) {
+                return null; // Or throw an exception as per your application's logic
+            } else {
+                return results.get(0); // Return the first (and only) result
+            }
+
+        } catch (NoResultException e) {
+            // Handle the case where no entity is found
+            e.printStackTrace();
             transaction.rollback();
-        }
-        finally {
+            return null; // Or throw an exception
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+            transaction.rollback();
+            return null; // Or throw an exception
+        } finally {
             entityManager.close();
         }
-        return EditUserProfileRepo.super.findByEmailId(emailId);
     }
+
+
+//    @Override
+//    public SignupDto findByEmailId(String emailId) {
+//        System.out.println("running findById method in EditUserProfileRepoImpl.. ");
+//        EntityManager entityManager=entityManagerFactory.createEntityManager();
+//        EntityTransaction transaction=entityManager.getTransaction();
+//        transaction.begin();
+//
+//        try{
+//            String query="select s  from SignupDto s  where s.emailId=:emailId";
+//            Query query1=entityManager.createQuery(query);
+//            query1.setParameter("emailId",emailId);
+//            SignupDto  singleResult= (SignupDto) query1.getSingleResult();
+//            transaction.commit();
+//            return singleResult;
+//        }
+//
+//        catch (PersistenceException persistenceException)
+//        {
+//            persistenceException.printStackTrace();
+//            transaction.rollback();
+//        }
+//        finally {
+//            entityManager.close();
+//        }
+//        return EditUserProfileRepo.super.findByEmailId(emailId);
+//    }
 
     @Override
     public SignupDto updateSignupDtoByEmailId(SignupDto updatedUserDetails) {

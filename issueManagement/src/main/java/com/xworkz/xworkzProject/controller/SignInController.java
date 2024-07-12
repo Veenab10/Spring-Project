@@ -55,8 +55,13 @@ public class SignInController {
 
             // Set session for email
             httpSession.setAttribute("signedInUserEmail", emailId);
-            // Set signupDto in session
+
+            // Set  session for signupDto
             httpSession.setAttribute("signupDto", signupDto);
+
+            //Set the profile image in the session
+            String profileImageUrl = "/images/" + signupDto.getImageName();
+            httpSession.setAttribute("profileImage", profileImageUrl);
 
         } else {
             accountLockService.incrementFailedAttempts(emailId);

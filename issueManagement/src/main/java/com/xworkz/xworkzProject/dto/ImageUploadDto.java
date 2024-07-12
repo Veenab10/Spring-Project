@@ -1,21 +1,24 @@
 package com.xworkz.xworkzProject.dto;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "image_details")
-public class ProfileImageDto {
+public class ImageUploadDto {
 
-    public ProfileImageDto()
+    public ImageUploadDto()
     {
-        System.out.println("Created ImageDto");
+        System.out.println("Created ProfileImageDto");
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
-    private int imageId;
+    private Long imageId;
+
+    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
+    @JoinColumn(name = "id", referencedColumnName = "id") // Adjust as per your schema
+    private SignupDto signupDto;
 
     @Column(name = "image_name")
     private String imageName;
@@ -26,15 +29,20 @@ public class ProfileImageDto {
     @Column(name = "image_type")
     private String imageType;
 
-    @Column(name = "id")
-    private int id;
-
-    public int getImageId() {
+    public Long getImageId() {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+    public void setImageId(Long imageId) {
         this.imageId = imageId;
+    }
+
+    public SignupDto getSignupDto() {
+        return signupDto;
+    }
+
+    public void setSignupDto(SignupDto signupDto) {
+        this.signupDto = signupDto;
     }
 
     public String getImageName() {
@@ -61,22 +69,14 @@ public class ProfileImageDto {
         this.imageType = imageType;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "ProfileImageDto{" +
                 "imageId=" + imageId +
+                ", signupDto=" + signupDto +
                 ", imageName='" + imageName + '\'' +
                 ", imageSize=" + imageSize +
                 ", imageType='" + imageType + '\'' +
-                ", id=" + id +
                 '}';
     }
 }

@@ -45,7 +45,7 @@ public class IssueManagementPrimaryConfiguration implements WebMvcConfigurer {
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setDefaultEncoding("utf-8");
-        multipartResolver.setMaxUploadSize(2097152); // 2MB
+        multipartResolver.setMaxUploadSize(10485760); // 10MB
         return multipartResolver;
     }
 

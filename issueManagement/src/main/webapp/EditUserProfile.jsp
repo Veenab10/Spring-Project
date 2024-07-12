@@ -25,6 +25,7 @@
 
                 <strong style="color:green"/>${profileMessage}</strong>
                 <strong style="color:green"/>${profileError}</strong>
+                <strong style="color:red"/>${imageError}</strong>
 
 
                 <div class="form-group p-3">
@@ -65,10 +66,10 @@
 
 
 
-                        <div class="form-group p-3">
-                            <label for="fileUpload">Upload File</label>
-                            <input type="file" class="form-control" id="file" name="file">
-                        </div>
+                 <div class="form-group p-3">
+                       <label for="fileUpload">Upload File</label>
+                       <input type="file" class="form-control" id="file" name="file">
+                 </div>
 
 
 
