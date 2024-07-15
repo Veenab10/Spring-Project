@@ -24,6 +24,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
     </div>
+
 </nav>
 
 <form action="signIn" method="post">

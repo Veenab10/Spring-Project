@@ -38,7 +38,7 @@ public class IssueManagementPrimaryConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").addResourceLocations("/javaScript/");
         //set path for image display
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("C:\\Users\\VEENA\\Desktop\\uploadImage");
+                .addResourceLocations("file:///C:/Users/VEENA/Desktop/uploadImage/");
     }
 
     @Bean
@@ -48,7 +48,5 @@ public class IssueManagementPrimaryConfiguration implements WebMvcConfigurer {
         multipartResolver.setMaxUploadSize(10485760); // 10MB
         return multipartResolver;
     }
-
-
 
 }

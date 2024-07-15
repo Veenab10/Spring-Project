@@ -3,13 +3,11 @@ package com.xworkz.xworkzProject.dto;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
 @Table(name = "signup")
 public class SignupDto {
 
-    public SignupDto()
-    {
+    public SignupDto() {
         System.out.println("Created SignupDto");
     }
 
@@ -53,11 +51,11 @@ public class SignupDto {
     private Integer count = 0;
 
     @Column(name = "account_locked")
-    private boolean accountLocked=false;
+    private boolean accountLocked = false;
 
     //lock account
     @Column(name = "failed_attempts")
-    private int failedAttempts=0;
+    private int failedAttempts = 0;
 
     public int getId() {
         return id;

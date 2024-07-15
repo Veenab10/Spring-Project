@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -26,8 +27,7 @@ public class SignInController {
     @Autowired
     SignInService signInService;
 
-    @Autowired
-    private HttpSession httpSession;
+
 
     @Autowired
     AccountLockService accountLockService;
@@ -45,7 +45,7 @@ public class SignInController {
 
     // signInSubmit method for login
     @PostMapping("/signIn")
-    public String signInSubmit(@Valid Model model, @RequestParam String emailId, @RequestParam String password) {
+    public String signInSubmit(@Valid Model model, @RequestParam String emailId, @RequestParam String password, HttpServletRequest request) {
         System.out.println("Running signInSubmit method....");
         SignupDto signupDto = signInService.findByEmailIdAndPassword(emailId, password);
         if (signupDto != null && !signupDto.isAccountLocked()) {
@@ -53,6 +53,7 @@ public class SignInController {
             model.addAttribute("Loginresult", "Login Succcessfully with," + signupDto.getEmailId());
             System.out.println("(Controller) data are exists" + signupDto);
 
+            HttpSession httpSession=request.getSession();
             // Set session for email
             httpSession.setAttribute("signedInUserEmail", emailId);
 
@@ -61,6 +62,8 @@ public class SignInController {
 
             //Set the profile image in the session
             String profileImageUrl = "/images/" + signupDto.getImageName();
+            System.out.println(signupDto.getImageName());
+            System.out.println(signupDto);
             httpSession.setAttribute("profileImage", profileImageUrl);
 
         } else {

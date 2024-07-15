@@ -19,7 +19,8 @@ import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("")
-@SessionAttributes("signupDto") // Specify the model attribute to be stored in session
+//@SessionAttributes("signupDto") // Specify the model attribute to be stored in session
+@SessionAttributes({"signupDto", "imageUploadDto"})
 public class EditUserProfileController {
 
     @Autowired

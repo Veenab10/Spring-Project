@@ -1,5 +1,7 @@
 package com.xworkz.xworkzProject.dto;
 
+import com.xworkz.xworkzProject.constant.Status;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +18,7 @@ public class ImageUploadDto {
     @Column(name = "image_id")
     private Long imageId;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
+    @OneToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
     @JoinColumn(name = "id", referencedColumnName = "id") // Adjust as per your schema
     private SignupDto signupDto;
 
@@ -69,14 +71,27 @@ public class ImageUploadDto {
         this.imageType = imageType;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "ProfileImageDto{" +
+        return "ImageUploadDto{" +
                 "imageId=" + imageId +
                 ", signupDto=" + signupDto +
                 ", imageName='" + imageName + '\'' +
                 ", imageSize=" + imageSize +
                 ", imageType='" + imageType + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

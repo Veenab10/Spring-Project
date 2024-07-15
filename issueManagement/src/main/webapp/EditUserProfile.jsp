@@ -67,7 +67,7 @@
 
 
                  <div class="form-group p-3">
-                       <label for="fileUpload">Upload File</label>
+                         <label for="fileUpload">Upload File</label>
                        <input type="file" class="form-control" id="file" name="file">
                  </div>
 

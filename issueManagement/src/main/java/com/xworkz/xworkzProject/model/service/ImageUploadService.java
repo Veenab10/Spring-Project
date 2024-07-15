@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface ImageUploadService {
 
     Optional<ImageUploadDto> getImageDetailsByUserId(int id);
+
 }

@@ -11,6 +11,8 @@ public class SignInServiceImpl implements SignInService {
     @Autowired
     SignInRepo signInRepo;
 
+
+
     public SignInServiceImpl()
     {
         System.out.println("Created SignInServiceImpl");
@@ -22,6 +24,7 @@ public class SignInServiceImpl implements SignInService {
         SignupDto signupDto=signInRepo.findByEmailIdAndPassword(emailId,password);
         if(signupDto!=null && signupDto.getPassword().equals(password) && !signupDto.isAccountLocked())
         {
+
             System.out.println("service: data are exists"+signupDto);
         }
         else {

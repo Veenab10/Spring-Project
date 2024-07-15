@@ -1,10 +1,12 @@
 package com.xworkz.xworkzProject.controller;
 
+import com.xworkz.xworkzProject.constant.Status;
 import com.xworkz.xworkzProject.dto.ImageUploadDto;
 import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.repo.ImageUploadRepo;
 import com.xworkz.xworkzProject.model.service.EditUserProfileService;
 import com.xworkz.xworkzProject.model.service.ImageUploadService;
+import com.xworkz.xworkzProject.model.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,8 @@ import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes("signupDto")
+//@SessionAttributes("signupDto")
+@SessionAttributes({"signupDto", "imageUploadDto"})
 public class ImageUploadController {
 
     public ImageUploadController()
@@ -45,42 +48,46 @@ public class ImageUploadController {
     @Autowired
     private ImageUploadRepo imageUploadRepo;
 
+    @Autowired
+    private SignUpService signUpService;
+
     @PostMapping("/upload") //in this image also uploading
     public String updateUserProfile(SignupDto signupDto, Model model, @RequestParam("file") MultipartFile file, HttpSession httpSession) {
         try {
+            //String newFileName=null;
+
             if (file != null && !file.isEmpty()) {
                 String originalFilename = file.getOriginalFilename();
-                String newFileName = signupDto.getEmailId() + "_" + originalFilename;
+                 String newFileName = signupDto.getEmailId() + "_" + originalFilename;
                 Path path = Paths.get(UPLOAD_DIR, newFileName);
                 //log.info("path: {}", path);
                 System.out.println("Path:"+path);
                 Files.write(path, file.getBytes());
                 signupDto.setImageName(newFileName);
 
+                signUpService.saveAndValidate(signupDto);
+
+                // Set all previous images inactive
+                imageUploadRepo.setAllImagesInactiveForUser(signupDto.getId());
 
 
                 if (newFileName != null) {
-                    String imageUrl = "C:\\Users\\VEENA\\Desktop\\uploadImage" + newFileName;
+                    String imageUrl = "/images/" + newFileName;
                     httpSession.setAttribute("profileImage", imageUrl);
                     model.addAttribute("imageURL", imageUrl);
                 }
 
                 // Save image details in database
                 ImageUploadDto imageUploadDto = new ImageUploadDto();
+
                 imageUploadDto.setSignupDto(signupDto); // Set the user
                 //imageUploadDto.setImagePath(newFileName); // Set the image path
                 imageUploadDto.setImageName(originalFilename);
                 imageUploadDto.setImageSize(file.getSize());
                 imageUploadDto.setImageType(file.getContentType());
-                // editProfileImageDTO.setUser(user);
-                //imageUploadDto.setCreatedBy(String.valueOf(LocalDateTime.now()));
-//                ditProfileImageDTO.setUser(signUpDTO); // Set the user
-//                editProfileImageDTO.setImagePath(newFileName); // Set the image path
-//                editProfileImageDTO.setImageName(originalFilename); // Set the original filename as imageName
-                //imageUploadService.saveImageDetails(editProfileImageDTO);
-                //imageUploadService.saveImageDetails(editProfileImageDTO); // Save image details
-                imageUploadRepo.saveProfileImage(imageUploadDto);
+                imageUploadDto.setStatus(Status.ACTIVE);
 
+                imageUploadRepo.saveProfileImage(imageUploadDto);
 
 
                 // Store uploaded file name in session
@@ -122,8 +129,6 @@ public class ImageUploadController {
             //log.error("Error uploading file", e);
             System.out.println("Error uploading file"+e);
         }
-
-
 
         return "HomePage"; // Handle error or success case
     }

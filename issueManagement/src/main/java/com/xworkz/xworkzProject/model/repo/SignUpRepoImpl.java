@@ -25,7 +25,7 @@ public class SignUpRepoImpl implements SignUpRepo {
         EntityTransaction transaction = manager.getTransaction();
         try {
             transaction.begin();
-            manager.persist(signupDto);
+            manager.merge(signupDto);
             transaction.commit();
         } catch (PersistenceException persistenceException) {
             persistenceException.printStackTrace();
@@ -104,15 +104,6 @@ public class SignUpRepoImpl implements SignUpRepo {
         return null;
     }
 
-//    @Override
-//    public Optional<SignupDto> findById(int id) {
-//        EntityManager entityManager= this.entityManagerFactory.createEntityManager();
-//        try {
-//            SignupDto signUpDto = entityManager.find(SignupDto.class, id);
-//            return Optional.ofNullable(signUpDto);
-//        } catch (NoResultException e) {
-//            return Optional.empty();
-//        }
-//    }
+
 
 }
