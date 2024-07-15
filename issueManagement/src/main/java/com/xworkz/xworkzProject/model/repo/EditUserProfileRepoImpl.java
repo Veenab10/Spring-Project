@@ -97,6 +97,8 @@ public class EditUserProfileRepoImpl implements EditUserProfileRepo {
                 existingUser.setAlternativeContactNumber(updatedUserDetails.getAlternativeContactNumber());
                 existingUser.setAddress(updatedUserDetails.getAddress());
                 existingUser.setImageName(updatedUserDetails.getImageName());
+                existingUser.setUpdatedBy(updatedUserDetails.getUpdatedBy());
+                existingUser.setUpdatedOn(updatedUserDetails.getUpdatedOn());
                 //existingUser.setAgree(updatedUserDetails.getAgree());
 
                 // Persist the changes

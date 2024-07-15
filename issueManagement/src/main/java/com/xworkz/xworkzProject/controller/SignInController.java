@@ -24,6 +24,7 @@ import javax.validation.Valid;
 public class SignInController {
 
     private static final Logger log = LoggerFactory.getLogger(SignInController.class);
+
     @Autowired
     SignInService signInService;
 
@@ -66,6 +67,7 @@ public class SignInController {
             System.out.println(signupDto);
             httpSession.setAttribute("profileImage", profileImageUrl);
 
+
         } else {
             accountLockService.incrementFailedAttempts(emailId);
             int failedAttempts = accountLockService.getFailedAttempts(emailId);
@@ -79,6 +81,7 @@ public class SignInController {
                 model.addAttribute("failed", "Invalid email id and password. Attempts: " + failedAttempts);
                 model.addAttribute("accountLocked", false);
                 System.out.println("(Controller) data are not exists" + signupDto);
+                return "SignIn";
 
             }
         }
