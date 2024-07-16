@@ -76,7 +76,6 @@ public class ImageUploadController {
                 // Set all previous images inactive
                 imageUploadRepo.setAllImagesInactiveForUser(signupDto.getId());
 
-
                 if (newFileName != null) {
                     String imageUrl = "/images/" + newFileName;
                     httpSession.setAttribute("profileImage", imageUrl);

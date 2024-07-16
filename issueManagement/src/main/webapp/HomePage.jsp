@@ -11,30 +11,13 @@
 
 </head>
 <body>
-<!---
-<nav class="p-3 mb-3 bg-primary text-white">
-    <div class="container-fluid">
-        <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
-
-        <div class="container-fluid">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
-        </button>
-
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="ResetPassword.jsp">Reset Password</a></li>
-            <li><a class="dropdown-item" href="edit-profile">Edit Profile</a></li>
-            <li><a class="dropdown-item" href="view-profile">View Profile</a></li>
-        </ul>
-    </div>
-    </div>
-</nav>---!>
 
 <nav class="navbar navbar-dark bg-primary">
             <div class="container-fluid">
-                <div class="navbar-header">
+            <div class="navbar-header">
             <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
             <a class="navbar-brand" style="color:white;" href="SignIn.jsp">SignIn</a>
+             <a class="navbar-brand" style="color:white;" href="RaiseComplaint.jsp">RaiseComplaint</a>
 
             </div>
 

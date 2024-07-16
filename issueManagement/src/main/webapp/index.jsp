@@ -16,7 +16,7 @@
         <a class="navbar-brand" style="color:white;" href="SignIn.jsp">SignIn</a>
         <a class="navbar-brand" style="color:white;" href="ForgetPassword.jsp">ForgetPassword</a>
         <a class="navbar-brand" style="color:white;" href="HomePage.jsp">HomePage</a>
-        <a class="navbar-brand" style="color:white;" href="Trial.jsp">Trial</a>
+
     </div>
 </nav>
 <body>
