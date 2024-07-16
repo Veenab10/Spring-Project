@@ -62,6 +62,7 @@ public class EditUserProfileServiceImpl implements EditUserProfileService {
             existingUser.setContactNumber(dto.getContactNumber());
             existingUser.setAlternativeContactNumber(dto.getAlternativeContactNumber());
             existingUser.setAddress(dto.getAddress());
+            existingUser.setImageName(dto.getImageName());
             existingUser.setUpdatedBy(dto.getUpdatedBy());
             existingUser.setUpdatedOn(dto.getUpdatedOn());
             //existingUser.setAgree(dto.getAgree());

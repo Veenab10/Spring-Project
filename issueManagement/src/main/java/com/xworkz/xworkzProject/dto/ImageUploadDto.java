@@ -3,13 +3,13 @@ package com.xworkz.xworkzProject.dto;
 import com.xworkz.xworkzProject.constant.Status;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "image_details")
 public class ImageUploadDto {
 
-    public ImageUploadDto()
-    {
+    public ImageUploadDto() {
         System.out.println("Created ProfileImageDto");
     }
 
@@ -18,7 +18,7 @@ public class ImageUploadDto {
     @Column(name = "image_id")
     private Long imageId;
 
-    @OneToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
+    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
     @JoinColumn(name = "id", referencedColumnName = "id") // Adjust as per your schema
     private SignupDto signupDto;
 
@@ -83,6 +83,52 @@ public class ImageUploadDto {
         this.status = status;
     }
 
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
+
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
     @Override
     public String toString() {
         return "ImageUploadDto{" +
@@ -92,6 +138,12 @@ public class ImageUploadDto {
                 ", imageSize=" + imageSize +
                 ", imageType='" + imageType + '\'' +
                 ", status=" + status +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdOn=" + createdOn +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updatedOn=" + updatedOn +
                 '}';
     }
 }
+
+

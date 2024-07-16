@@ -51,6 +51,9 @@ public class ImageUploadController {
     @Autowired
     private SignUpService signUpService;
 
+
+
+
     @PostMapping("/upload") //in this image also uploading
     public String updateUserProfile(SignupDto signupDto, Model model, @RequestParam("file") MultipartFile file, HttpSession httpSession) {
         try {
@@ -63,10 +66,12 @@ public class ImageUploadController {
                 //log.info("path: {}", path);
                 System.out.println("Path:"+path);
                 Files.write(path, file.getBytes());
+
                 signupDto.setImageName(newFileName);
 
                 //here we have to call saveAndValidate method for saving imageName into signup table
-                signUpService.saveAndValidate(signupDto);
+                //signUpService.saveAndValidate(signupDto);
+                editUserProfileService.updateSignupDtoByEmailId(signupDto);
 
                 // Set all previous images inactive
                 imageUploadRepo.setAllImagesInactiveForUser(signupDto.getId());
@@ -87,6 +92,10 @@ public class ImageUploadController {
                 imageUploadDto.setImageSize(file.getSize());
                 imageUploadDto.setImageType(file.getContentType());
                 imageUploadDto.setStatus(Status.ACTIVE);
+                imageUploadDto.setCreatedBy(signupDto.getEmailId());
+                imageUploadDto.setCreatedOn(LocalDateTime.now());
+                imageUploadDto.setUpdatedBy(signupDto.getEmailId());
+                imageUploadDto.setUpdatedOn(LocalDateTime.now());
 
                 imageUploadRepo.saveProfileImage(imageUploadDto);
 
@@ -96,6 +105,7 @@ public class ImageUploadController {
             }
 
             SignupDto updatedUserData = editUserProfileService.updateSignupDtoByEmailId(signupDto);
+
             if (updatedUserData != null) {
                 model.addAttribute("sinupDto", updatedUserData);
                 model.addAttribute("msg", "Profile updated successfully");
@@ -103,6 +113,7 @@ public class ImageUploadController {
                 httpSession.setAttribute("firstName", updatedUserData.getFirstName());
                 httpSession.setAttribute("lastName", updatedUserData.getLastName());
                 httpSession.setAttribute("contactNumber", updatedUserData.getContactNumber());
+
 
 
 
