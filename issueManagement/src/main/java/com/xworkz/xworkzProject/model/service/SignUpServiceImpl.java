@@ -6,6 +6,7 @@ import com.xworkz.xworkzProject.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,9 @@ public class SignUpServiceImpl  implements SignUpService{
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     public SignUpServiceImpl()
     {
@@ -33,29 +37,23 @@ public class SignUpServiceImpl  implements SignUpService{
     public boolean saveAndValidate(SignupDto signupDto) {
         System.out.println("Running saveAndValidate...");
 
-        //Generating Random password and sending it...
-        String generatedPassword = generatePassword();
-        signupDto.setPassword(generatedPassword);
-        sendPassword(signupDto);
 
-        //AuditDto
         String fullName = signupDto.getFirstName() + " " + signupDto.getLastName();
         signupDto.setCreatedBy(fullName);
         signupDto.setCreateOn(LocalDateTime.now());
+        signupDto.setImageName("defaultImage.jpeg");
 
-
-        signupDto.setCount(0);
-
-
+        String password=generatePassword();
+        signupDto.setPassword(passwordEncoder.encode(password));
         boolean save=signUpRepo.save(signupDto);
-        if(save)
-        {
-            System.out.println("saved in repo in service"+signupDto);
+        if(save){
+            signupDto.setPassword(password);
+            sendPassword(signupDto);
+            return  true;
         }
         else {
-            System.out.println("not saved in repo in service"+signupDto);
+            return  false;
         }
-        return true;
     }
 
     public void sendPassword(SignupDto signupDto) {

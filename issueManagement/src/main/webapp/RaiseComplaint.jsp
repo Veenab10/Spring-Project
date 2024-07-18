@@ -34,12 +34,12 @@
                          <span id="countryNameError"></span>
                          <label for="countryName" class="form-label">Complaint Type:</label>
                          <select class="form-select custom-select-width" id="complaintType" name="complaintType"  placeholder="Complaint Type">
-                               <option ${dto.collegeName==null ? 'selected' : ''}  selected value=" "></option>
-                               <option value="Water Supply" ${dto.collegeName eq 'Water Supply' ? 'selected' : ''}>Water Supply</option>
-                               <option value="System Problem"  ${dto.collegeName eq 'System Problem' ? 'selected' : ''}>System Problem</option>
-                               <option value="Network Problem"  ${dto.collegeName eq 'Network Problem' ? 'selected' : ''}>Network Problem</option>
-                               <option value="Electrical Problem"  ${dto.collegeName eq 'Electrical Problem' ? 'selected' : ''}>Electrical Problem</option>
-                               <option value="Noise Problem"  ${dto.collegeName eq 'GMIT' ? 'selected' : ''}>Noise Problem</option>
+                               <option ${dto.complaintType==null ? 'selected' : ''}  selected value=" "></option>
+                               <option value="Water Supply" ${dto.complaintType eq 'Water Supply' ? 'selected' : ''}>Water Supply</option>
+                               <option value="System Problem"  ${dto.complaintType eq 'System Problem' ? 'selected' : ''}>System Problem</option>
+                               <option value="Network Problem"  ${dto.complaintType eq 'Network Problem' ? 'selected' : ''}>Network Problem</option>
+                               <option value="Electrical Problem"  ${dto.complaintType eq 'Electrical Problem' ? 'selected' : ''}>Electrical Problem</option>
+                               <option value="Noise Problem"  ${dto.complaintType eq 'GMIT' ? 'selected' : ''}>Noise Problem</option>
                            </select>
                            <span id="collegeNameError"></span>
                        </div>
@@ -59,7 +59,7 @@
                                        <div class="row mb-3">
                                            <span id="stateNameError"></span>
                                            <label for="state" class="form-label">State:</label>
-                                           <select class="form-select custom-select-width" id="state" name="state" placeholder="Enter State" >
+                                           <select class="form-select custom-select-width" id="state" name="state" onchange="loadCities(this,countryName)"  placeholder="Enter State" >
                                                <!-- States will be loaded here by JavaScript -->
                                            </select><br>
                                        </div>

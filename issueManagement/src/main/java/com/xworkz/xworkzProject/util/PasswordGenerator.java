@@ -23,6 +23,7 @@ public class PasswordGenerator {
         // Optionally, include special characters by concatenating with a separate special characters set
         String specialChars = "!@#$%^&*()";
         SecureRandom random = new SecureRandom();
+
         for (int i = 0; i < 3; i++) { // Ensure at least 3 special characters
             int position = random.nextInt(password.length());
             password = password.substring(0, position) + specialChars.charAt(random.nextInt(specialChars.length())) + password.substring(position + 1);

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/")
 public class ResetPasswordController {
 
     @Autowired
@@ -22,7 +23,7 @@ public class ResetPasswordController {
 
     @PostMapping("reset-password")
     public String passwordReset(@RequestParam  String emailId, String oldPassword, String newPassword, String confirmPassword,Model model) {
-
+        System.out.println("email"+emailId+"old"+oldPassword+"new"+newPassword+"con"+confirmPassword);
         boolean resetSuccessful = resetPasswordService.changePassword(emailId, oldPassword, newPassword, confirmPassword);
         if (resetSuccessful) {
             System.out.println("Password reset Successful: " + resetSuccessful);

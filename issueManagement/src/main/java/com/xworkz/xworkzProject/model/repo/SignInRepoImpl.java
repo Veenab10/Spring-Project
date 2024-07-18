@@ -17,14 +17,32 @@ public class SignInRepoImpl  implements SignInRepo{
         System.out.println("Created SignInRepoImpl");
     }
 
+    @Override
+    public SignupDto finByEmailId(String email) {
+        System.out.println("Running findByEmailId method... ");
+        EntityManager entityManager =entityManagerFactory.createEntityManager();
+        try {
+            Query query =entityManager.createQuery("Select s from SignupDto s where s.emailId=:emailId");
+            query.setParameter("emailId",email);
+            SignupDto signupDto= (SignupDto) query.getSingleResult();
+            //entityTransaction.commit();
+            return signupDto;
+        }
+        catch (PersistenceException persistenceException)
+        {
+            persistenceException.getStackTrace();
+            //entityTransaction.rollback();
+        }
+        finally {
+            entityManager.close();
+        }
+        return null;
+    }
     //This findByEmailIDANdPassword is used for checking wheather id and pwd are exists in database or not
     @Override
     public SignupDto findByEmailIdAndPassword(String emailId, String password) {
         System.out.println("Running findByEmailIdAndPassword method... ");
         EntityManager entityManager =entityManagerFactory.createEntityManager();
-       // EntityTransaction entityTransaction =entityManager.getTransaction();
-        //entityTransaction.begin();
-
         try {
             Query query =entityManager.createQuery("Select s from SignupDto s where s.emailId=:emailId and s.password=:password");
             query.setParameter("emailId",emailId);

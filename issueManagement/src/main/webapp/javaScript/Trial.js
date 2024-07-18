@@ -68,55 +68,24 @@ async function loadStates(element) {
 
     const endpoint = `https://api.countrystatecity.in/v1/countries/${countryISO2}/states`;
     const states = await fetchAPI(endpoint);
-
-    statesList=states;
-
     const stateSelect = document.getElementById('state');
     stateSelect.innerHTML = '<option selected disabled>Choose State</option>'; // Clear any existing options
 
     states.forEach(state => {
         let option = document.createElement('option');
-        option.value = state.name;
+        option.value = state.iso2;
         option.textContent = state.name;
         stateSelect.appendChild(option);
     });
 
-   // console.log(`States loaded for country ${countryCode}:`, states);
+    console.log(`States loaded for country ${countryCode}:`, states);
 
 }
 
 
-
-
-async function loadCities(state, country) {
-
-let stateName=state.value;
-let countryName=country.value;
-console.log(stateName,countryName)
-
-
-
-    console.log(`Loading cities for state code: ${stateName} in country: ${countryName}`);
-        let countryISO2='';
-
-        countriesList.forEach(country => {
-                   if(countryName === country.name){
-                         console.log("Found "+country.iso2+" "+country.name)
-                         countryISO2 = country.iso2;
-                   }
-            });
-
-            let stateIso2='';
-
-            statesList.forEach(state => {
-                               if(stateName === state.name){
-                                     console.log("Found "+state.iso2+" "+state.name)
-                                     stateIso2 = state.iso2;
-
-                               }
-                        });
-
-    const endpoint = `https://api.countrystatecity.in/v1/countries/${countryISO2}/states/${stateIso2}/cities`;
+async function loadCities(stateCode, countryCode) {
+    console.log(`Loading cities for state code: ${stateCode} in country: ${countryCode}`);
+    const endpoint = `https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`;
     const cities = await fetchAPI(endpoint);
     const citySelect = document.getElementById('city');
     citySelect.innerHTML = '<option selected disabled>Choose City</option>'; // Clear any existing options
@@ -128,7 +97,7 @@ console.log(stateName,countryName)
         citySelect.appendChild(option);
     });
 
-    console.log(`Cities loaded for state ${stateName}:`, cities);
+    console.log(`Cities loaded for state ${stateCode}:`, cities);
 }
 
 // Call the function to fetch countries when the page loads

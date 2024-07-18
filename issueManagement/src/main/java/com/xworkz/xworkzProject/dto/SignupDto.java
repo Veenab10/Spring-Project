@@ -51,7 +51,7 @@ public class SignupDto {
     private Integer count = 0;
 
     @Column(name = "account_locked")
-    private boolean accountLocked = false;
+    private boolean accountLocked=false;
 
     //lock account
     @Column(name = "failed_attempts")
@@ -167,7 +167,8 @@ public class SignupDto {
     //lock Account
 
 
-    public boolean isAccountLocked() {
+    public boolean isAccountLocked()
+    {
         return accountLocked;
     }
 
@@ -176,6 +177,7 @@ public class SignupDto {
     }
 
     public int getFailedAttempts() {
+
         return failedAttempts;
     }
 
