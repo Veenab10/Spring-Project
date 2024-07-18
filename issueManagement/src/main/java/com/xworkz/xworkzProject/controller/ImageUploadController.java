@@ -52,8 +52,6 @@ public class ImageUploadController {
     private SignUpService signUpService;
 
 
-
-
     @PostMapping("/upload") //in this image also uploading
     public String updateUserProfile(SignupDto signupDto, Model model, @RequestParam("file") MultipartFile file, HttpSession httpSession) {
         try {

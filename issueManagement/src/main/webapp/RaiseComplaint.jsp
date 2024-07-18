@@ -28,7 +28,9 @@
               <div class="card-body">
                   <center><h5 class="card-title">Raise Complaint Form</h5></center>
                   <hr>
-                  <strong style="color:green"/>${result}</strong>
+                  <strong style="color:green"/>${user}</strong>
+                  <strong style="color:red"/>${raiseComplaintSucess}</strong>
+                  <strong style="color:red"/>${ErrorRaiseComplaintSucess}</strong>
 
                    <div class="row mb-3">
                          <span id="countryNameError"></span>

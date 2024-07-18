@@ -67,6 +67,9 @@ public class SignInController {
             System.out.println(signupDto);
             httpSession.setAttribute("profileImage", profileImageUrl);
 
+            //set the session for saving user id(signupId) in the complaint Table
+
+
 
         } else {
             accountLockService.incrementFailedAttempts(emailId);

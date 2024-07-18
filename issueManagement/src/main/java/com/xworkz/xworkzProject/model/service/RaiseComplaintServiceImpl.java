@@ -1,9 +1,15 @@
 package com.xworkz.xworkzProject.model.service;
 
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
+import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.repo.RaiseComplaintRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Service
 public class RaiseComplaintServiceImpl implements RaiseComplaintService{
@@ -31,4 +37,24 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService{
         }
         return true;
     }
+
+
+    @Override
+    public Optional<RaiseComplaintDto> findByUserId(int id) {
+        return raiseComplaintRepo.findByUserId(id);
+    }
+
+    @Override
+    public Optional<RaiseComplaintDto> findBySignedInUser(HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        SignupDto signedInUser = (SignupDto) httpSession.getAttribute("signupDto");
+        if (signedInUser != null) {
+            return raiseComplaintRepo.findByUserId(signedInUser.getId());
+        }
+        return Optional.empty();
+    }
+
 }
+
+
+

@@ -14,7 +14,7 @@ public class RaiseComplaintDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "complaint_id")
-    private  int id;
+    private  int complaintId;
 
     @Column(name = "complaint_type")
     private String complaintType;
@@ -37,12 +37,12 @@ public class RaiseComplaintDto {
     @Column(name = "description")
     private String description;
 
-    public int getId() {
-        return id;
+    public int getComplaintId() {
+        return complaintId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setComplaintId(int complaintId) {
+        this.complaintId = complaintId;
     }
 
     public String getComplaintType() {
@@ -101,10 +101,23 @@ public class RaiseComplaintDto {
         this.description = description;
     }
 
+
+    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
+    @JoinColumn(name = "id", referencedColumnName = "id") // Adjust as per your schema
+    private SignupDto userId;
+
+    public SignupDto getUserId() {
+        return userId;
+    }
+
+    public void setUserId(SignupDto userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "RaiseComplaintDto{" +
-                "id=" + id +
+                "complaintId=" + complaintId +
                 ", complaintType='" + complaintType + '\'' +
                 ", country='" + country + '\'' +
                 ", state='" + state + '\'' +
@@ -112,6 +125,7 @@ public class RaiseComplaintDto {
                 ", area='" + area + '\'' +
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }
