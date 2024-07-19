@@ -49,6 +49,7 @@ public class SignInController {
     public String signInSubmit(@Valid Model model, @RequestParam String emailId, @RequestParam String password, HttpServletRequest request) {
         System.out.println("Running signInSubmit method....");
         SignupDto signupDto = signInService.findByEmailIdAndPassword(emailId, password);
+        System.out.println("after recive the dto from service"+signupDto);
         if (signupDto != null && !signupDto.isAccountLocked()) {
             accountLockService.resetFailedAttempts(emailId);
             model.addAttribute("Loginresult", "Login Succcessfully with," + signupDto.getEmailId());
@@ -66,12 +67,10 @@ public class SignInController {
             System.out.println(signupDto.getImageName());
             System.out.println(signupDto);
             httpSession.setAttribute("profileImage", profileImageUrl);
+             return "HomePage";
 
-            //set the session for saving user id(signupId) in the complaint Table
-
-
-
-        } else {
+        }
+        else {
             accountLockService.incrementFailedAttempts(emailId);
             int failedAttempts = accountLockService.getFailedAttempts(emailId);
             System.out.println("Failed attempts for " + emailId + ": " + failedAttempts);
@@ -85,10 +84,7 @@ public class SignInController {
                 model.addAttribute("accountLocked", false);
                 System.out.println("(Controller) data are not exists" + signupDto);
                 return "SignIn";
-
             }
         }
-
-        return "HomePage";
     }
 }

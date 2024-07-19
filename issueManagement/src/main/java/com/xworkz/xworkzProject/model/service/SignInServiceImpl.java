@@ -28,17 +28,16 @@ public class SignInServiceImpl implements SignInService {
     //This findByEmailIDANdPassword is used for checking wheather id and pwd are exists in database or not and account lock
     @Override
     public SignupDto findByEmailIdAndPassword(String emailId, String password) {
+        System.out.println(" this my service findByEmailIdAndPassword========================================");
           SignupDto signupDto=this.signInRepo.finByEmailId(emailId);
-        if(signupDto!=null && passwordEncoder.matches(password, signupDto.getPassword())  && !signupDto.isAccountLocked())
-        {
-            System.out.println("service: data are exists"+signupDto);
+        System.out.println("service: data are exists"+signupDto);
+        if(signupDto!=null && passwordEncoder.matches(password, signupDto.getPassword())  && !signupDto.isAccountLocked()) {
+            System.out.println("service: data are exists" + signupDto);
             signupDto.setPassword(null);
             return signupDto;
         }
-        else {
             System.out.println("service: data are not exists"+signupDto);
-        }
-        return signupDto;
+        return null;
         //return  null;
     }
 }

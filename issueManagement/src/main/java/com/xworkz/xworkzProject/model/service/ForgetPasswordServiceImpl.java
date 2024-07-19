@@ -6,6 +6,7 @@ import com.xworkz.xworkzProject.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.xworkz.xworkzProject.util.PasswordGenerator.generatePassword;
@@ -18,6 +19,10 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
 
     @Autowired
     private AccountLockService accountLockService;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
 
 
     @Autowired
@@ -36,10 +41,12 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
         {
             //Generating Random password and sending it...
             String newPassword = generatePassword();
+           // signupDto.setPassword(encoder.encode(newPassword));
+            forgetPasswordRepo.updatePassword(emailId,encoder.encode(newPassword));
             signupDto.setPassword(newPassword);
             sendPassword(signupDto);
 
-            forgetPasswordRepo.updatePassword(emailId,newPassword);
+
 
             //Reset failed attempts
             accountLockService.resetFailedAttempts(emailId);

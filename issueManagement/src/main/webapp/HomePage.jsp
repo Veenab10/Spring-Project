@@ -35,6 +35,7 @@
 
 <div class="container">
     <h2>Welcome to the Homepage</h2>
+    <strong style="color:green;">${Loginresult}</strong>
 
 </div>
 
