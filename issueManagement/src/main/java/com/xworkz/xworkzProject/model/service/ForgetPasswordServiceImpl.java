@@ -1,6 +1,7 @@
 package com.xworkz.xworkzProject.model.service;
 
 import com.xworkz.xworkzProject.dto.SignupDto;
+import com.xworkz.xworkzProject.emailSending.MailSending;
 import com.xworkz.xworkzProject.model.repo.ForgetPasswordRepo;
 import com.xworkz.xworkzProject.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,8 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
     @Autowired
     private PasswordEncoder encoder;
 
-
-
     @Autowired
-    JavaMailSender javaMailSender;
+    private MailSending mailSending;
 
     public ForgetPasswordServiceImpl()
     {
@@ -44,22 +43,15 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
            // signupDto.setPassword(encoder.encode(newPassword));
             forgetPasswordRepo.updatePassword(emailId,encoder.encode(newPassword));
             signupDto.setPassword(newPassword);
-            sendPassword(signupDto);
-
-
+            //sendPassword(signupDto);
+            mailSending.forgotPassword(signupDto);
 
             //Reset failed attempts
             accountLockService.resetFailedAttempts(emailId);
             accountLockService.unlockAccount(emailId);
             System.out.println("(service)Data is existing "+signupDto);
 
-            SimpleMailMessage message=new SimpleMailMessage();//SimpleMailMessage is a class
-            message.setTo(emailId);
-            message.setSubject("Password Reset");
-            message.setText("Your new password is:"+newPassword);
-            javaMailSender.send(message);
             return true;
-
 
         }
         else
@@ -68,17 +60,5 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
         }
         return false;
     }
-
-    public void sendPassword(SignupDto signupDto) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(signupDto.getEmailId());
-        message.setSubject("One Time Password");
-        message.setText("Dear " + signupDto.getFirstName() + " " + signupDto.getLastName() + ", You have been successfully Signed Up,\n\n" +
-                "Please Sign in through this password: " + signupDto.getPassword() + "\n\n" +
-                "Thanks and Regards,\n" + " " +
-                "XworkzProject Team");
-        javaMailSender.send(message);
-    }
-
 
 }

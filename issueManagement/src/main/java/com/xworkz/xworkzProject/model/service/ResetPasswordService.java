@@ -6,6 +6,6 @@ public interface ResetPasswordService {
 
     boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword);
 
-    void sendPassword(SignupDto signupDto);
+   // void sendPassword(SignupDto signupDto);
 
 }

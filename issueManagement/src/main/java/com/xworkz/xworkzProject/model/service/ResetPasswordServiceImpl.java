@@ -1,6 +1,7 @@
 package com.xworkz.xworkzProject.model.service;
 
 import com.xworkz.xworkzProject.dto.SignupDto;
+import com.xworkz.xworkzProject.emailSending.MailSending;
 import com.xworkz.xworkzProject.model.repo.ResetPasswordRepo;
 import com.xworkz.xworkzProject.model.repo.SignInRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
     private ResetPasswordRepo resetPasswordRepo;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private MailSending mailSending;
 
     @Autowired
     private SignInRepo signInRepo;
@@ -29,7 +30,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
     @Override
     public boolean changePassword(String emailId, String oldPassword, String newPassword, String confirmPassword) {
-        System.out.println("Attempting to change password for email: " + emailId);
+          System.out.println("Attempting to change password for email: " + emailId);
 
         // Step 1: Check if newPassword matches confirmPassword
         if (!newPassword.equals(confirmPassword)) {
@@ -61,7 +62,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         if (save) {
             System.out.println("Password updated successfully for email: " + emailId);
             try {
-                sendPasswordUpdateNotification(signupDto, newPassword);
+                mailSending.sendResetPassword(signupDto, newPassword);
                 return true; // Password successfully updated and email sent
             } catch (MailException e) {
                 // Handle exception if email sending fails (log it or take appropriate action)
@@ -71,19 +72,6 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         }
 
         return false; // Password update failed
-    }
-
-    @Override
-    public void sendPassword(SignupDto signupDto) {
-
-    }
-
-    private void sendPasswordUpdateNotification(SignupDto signupDto, String newPassword) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(signupDto.getEmailId());
-        message.setSubject("Password Reset");
-        message.setText("Your new password is: " + newPassword);
-        javaMailSender.send(message);
     }
 }
 

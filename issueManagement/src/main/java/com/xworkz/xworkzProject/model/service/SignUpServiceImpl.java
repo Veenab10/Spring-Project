@@ -1,6 +1,7 @@
 package com.xworkz.xworkzProject.model.service;
 
 import com.xworkz.xworkzProject.dto.SignupDto;
+import com.xworkz.xworkzProject.emailSending.MailSending;
 import com.xworkz.xworkzProject.model.repo.SignUpRepo;
 import com.xworkz.xworkzProject.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class SignUpServiceImpl  implements SignUpService{
      private SignUpRepo signUpRepo;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private MailSending mailSending;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,14 +42,17 @@ public class SignUpServiceImpl  implements SignUpService{
         String fullName = signupDto.getFirstName() + " " + signupDto.getLastName();
         signupDto.setCreatedBy(fullName);
         signupDto.setCreateOn(LocalDateTime.now());
+
         signupDto.setImageName("defaultImage.jpeg");
+
 
         String password=generatePassword();
         signupDto.setPassword(passwordEncoder.encode(password));
         boolean save=signUpRepo.save(signupDto);
         if(save){
             signupDto.setPassword(password);
-            sendPassword(signupDto);
+            //sendPassword(signupDto);
+            mailSending.sendPassword(signupDto);
             return  true;
         }
         else {
@@ -56,16 +60,6 @@ public class SignUpServiceImpl  implements SignUpService{
         }
     }
 
-    public void sendPassword(SignupDto signupDto) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(signupDto.getEmailId());
-        message.setSubject("One Time Password");
-        message.setText("Dear " + signupDto.getFirstName() + " " + signupDto.getLastName() + ", You have been successfully Signed Up,\n\n" +
-                "Please Sign in through this password: " + signupDto.getPassword() + "\n\n" +
-                "Thanks and Regards,\n" + " " +
-                "XworkzProject Team");
-        javaMailSender.send(message);
-    }
 
     //Validating Email Id and Contact Number Using AJAX
     @Override

@@ -10,7 +10,7 @@ public interface SignUpService {
     boolean saveAndValidate(SignupDto signupDto);
 
     // send method is used for sending password to email
-    void sendPassword(SignupDto signupDto);
+    //void sendPassword(SignupDto signupDto);
 
     //AJAX Call ( Checking Duplicate emailId and Contact Number using AJAX )
 

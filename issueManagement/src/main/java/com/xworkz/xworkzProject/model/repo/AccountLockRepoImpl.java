@@ -44,13 +44,15 @@ public class AccountLockRepoImpl implements AccountLockRepo {
             entityManager.merge(signupDto);
             transaction.commit();
             return true;
-        } catch (PersistenceException e) {
+        }
+        catch (PersistenceException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
             e.printStackTrace();
-            return false; // Handle exception gracefully, maybe throw a custom exception
-        } finally {
+            return false;
+        }
+        finally {
             entityManager.close();
         }
     }
