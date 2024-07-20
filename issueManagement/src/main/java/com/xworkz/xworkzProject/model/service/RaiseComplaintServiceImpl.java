@@ -54,6 +54,12 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService{
         return Optional.empty();
     }
 
+    @Override
+    public RaiseComplaintDto findByComplaintId(int complaintId) {
+        System.out.println("Running findByComplaintId method in RaiseComplaintServiceImpl... ");
+       return raiseComplaintRepo.findByComplaintId(complaintId);
+    }
+
 }
 
 

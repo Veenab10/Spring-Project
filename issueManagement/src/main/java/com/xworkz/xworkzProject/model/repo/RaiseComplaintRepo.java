@@ -11,4 +11,7 @@ public interface RaiseComplaintRepo {
     boolean saveRaiseComplaintType(RaiseComplaintDto raiseComplaintDto);
 
     Optional<RaiseComplaintDto> findByUserId(int id);
+
+    //complaint view
+    RaiseComplaintDto findByComplaintId(int complaintId);
 }

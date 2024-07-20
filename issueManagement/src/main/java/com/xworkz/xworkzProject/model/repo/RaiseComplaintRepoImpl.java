@@ -50,6 +50,17 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
             entityManager.close();
         }
     }
+
+    @Override
+    public RaiseComplaintDto findByComplaintId(int complaintId) {
+        System.out.println("Running findByComplaintId method in RaiseComplaintRepoImpl");
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        String query="Select c from RaiseComplaintDto c where c.complaintId=: complaintId";
+        Query query1=entityManager.createQuery(query);
+        query1.setParameter("complaintId",complaintId);
+        RaiseComplaintDto raiseComplaintDto= (RaiseComplaintDto) query1.getSingleResult();
+        return raiseComplaintDto;
+    }
 }
 
 

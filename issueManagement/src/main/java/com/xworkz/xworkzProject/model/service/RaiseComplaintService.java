@@ -12,4 +12,7 @@ public interface RaiseComplaintService {
     Optional<RaiseComplaintDto> findByUserId(int id);
 
     Optional<RaiseComplaintDto> findBySignedInUser(HttpServletRequest request);
+
+    //view complaint
+    RaiseComplaintDto findByComplaintId(int complaintId);
 }

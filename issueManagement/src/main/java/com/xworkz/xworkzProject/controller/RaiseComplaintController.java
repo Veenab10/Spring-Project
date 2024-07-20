@@ -6,10 +6,12 @@ import com.xworkz.xworkzProject.model.service.RaiseComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+
+import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -44,7 +46,7 @@ public class RaiseComplaintController {
         {
             System.out.println("Controller:save raiseComplaint details successfully"+raiseComplaintDto);
             model.addAttribute("raiseComplaintSucess","saved raiseComplaint details successfully");
-            return "RaiseComplaint";
+            return "ViewComplaint";
         }
 
         else {
@@ -53,4 +55,34 @@ public class RaiseComplaintController {
         }
         return "RaiseComplaint";
     }
+
+    @GetMapping("view-complaint")
+    public String viewComplaint(@RequestParam("complaintId")int complaintId,HttpServletRequest request, Model model) {
+        System.out.println("Running viewComplaint method in RaiseComplaintController...");
+
+        // Step 1: Retrieve signed-in user email
+        HttpSession httpSession = request.getSession();
+        RaiseComplaintDto raiseComplaintDto = (RaiseComplaintDto) httpSession.getAttribute("raiseComplaintDto");
+        Integer cid = raiseComplaintDto != null ? raiseComplaintDto.getComplaintId() : null;
+
+        // Step 2: Retrieve complaint DTO based on complaint ID (assuming complaintId is obtained somehow)
+        //int complaintId = raiseComplaintDto.getComplaintId(); // You need to define how you get the complaintId
+        RaiseComplaintDto raiseComplaintDto1 = raiseComplaintService.findByComplaintId(complaintId);
+
+        // Step 3: Add the complaint DTO to the model
+        model.addAttribute("raiseComplaintDto", raiseComplaintDto);
+
+        // Step 4: Return the view name
+        return "ViewComplaint"; // Assuming "ComplaintView" is your view name
+    }
+
+    @GetMapping("edit-complaint")
+    public String editComplaint(@RequestParam("complaintId")int complaintId)
+    {
+        System.out.println("Running editComplaint running in RaiseComplaintController ");
+        RaiseComplaintDto raiseComplaintDto1 = raiseComplaintService.findByComplaintId(complaintId);
+
+        return "EditRaiseComplaint";
+    }
+
 }
