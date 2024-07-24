@@ -16,28 +16,25 @@
             <div class="container-fluid">
             <div class="navbar-header">
             <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
-             <a class="navbar-brand" style="color:white;" href="RaiseComplaint.jsp">RaiseComplaint</a>
-             <a class="navbar-brand" style="color:white;" href="view-complaint">view-complaint</a>
-
 
             </div>
 
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="50" height="50" class="rounded-circle">
+                     <!---   <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="50" height="50" class="rounded-circle">---!>
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="ResetPassword.jsp">Reset Password</a></li>
-                        <li><a class="dropdown-item" href="edit-profile">Edit Profile</a></li>
-                        <li><a class="dropdown-item" href="view-profile">View Profile</a></li>
-                        <li><a class="dropdown-item" href="view-complaint">View Complaint</a></li>
+                        <li><a class="dropdown-item" href="view-user-details">View Users Profile </a></li>
+                        <li><a class="dropdown-item" href="view-user-complaints">View Users Complaints</a></li>
+                        <li><a class="dropdown-item" href="search-user-complaints">AdminViewUserComplaintsSearchDetails</a></li>
+
 
                     </ul>
         </div>
     </nav>
 
 <div class="container">
-    <h2>Welcome to User Profile Page</h2>
+    <h2>Welcome to the Admin Profile</h2>
     <strong style="color:green;">${Loginresult}</strong>
 
 </div>

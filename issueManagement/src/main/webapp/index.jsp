@@ -12,10 +12,9 @@
 <body>
 <nav class="p-3 mb-2 bg-primary text-white">
     <div class="container-fluid">
-        <a class="navbar-brand" style="color:white;" href="Signup.jsp">Signup</a>
-        <a class="navbar-brand" style="color:white;" href="SignIn.jsp">SignIn</a>
-        <a class="navbar-brand" style="color:white;" href="ForgetPassword.jsp">ForgetPassword</a>
-        <a class="navbar-brand" style="color:white;" href="HomePage.jsp">HomePage</a>
+        <a class="navbar-brand" style="color:white;" href="Signup.jsp">User Signup</a>
+        <a class="navbar-brand" style="color:white;" href="AdminSignIn.jsp">AdminSignIn</a>
+
 
     </div>
 </nav>

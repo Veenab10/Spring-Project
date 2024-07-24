@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,7 +28,7 @@ public class RaiseComplaintController {
     }
 
     @PostMapping("/raise-complaint")
-    public String raiseComplaint(@ModelAttribute("signupDto") SignupDto signupDto,@ModelAttribute("raiseComplaintDto") RaiseComplaintDto raiseComplaintDto, Model model)
+    public String raiseComplaint( @ModelAttribute("signupDto")SignupDto signupDto,@ModelAttribute("raiseComplaintDto") RaiseComplaintDto raiseComplaintDto, Model model)
     {
         System.out.println("Running raiseComplaint method in RaiseComplaintController...");
         // Accessing id from SignupDto
@@ -41,12 +42,11 @@ public class RaiseComplaintController {
 
         boolean save=raiseComplaintService.saveRaiseComplaintType(raiseComplaintDto);
 
-
         if(save)
         {
             System.out.println("Controller:save raiseComplaint details successfully"+raiseComplaintDto);
             model.addAttribute("raiseComplaintSucess","saved raiseComplaint details successfully");
-            return "ViewComplaint";
+            return "RaiseComplaint";
         }
 
         else {
@@ -56,33 +56,35 @@ public class RaiseComplaintController {
         return "RaiseComplaint";
     }
 
+
     @GetMapping("view-complaint")
-    public String viewComplaint(@RequestParam("complaintId")int complaintId,HttpServletRequest request, Model model) {
-        System.out.println("Running viewComplaint method in RaiseComplaintController...");
-
-        // Step 1: Retrieve signed-in user email
-        HttpSession httpSession = request.getSession();
-        RaiseComplaintDto raiseComplaintDto = (RaiseComplaintDto) httpSession.getAttribute("raiseComplaintDto");
-        Integer cid = raiseComplaintDto != null ? raiseComplaintDto.getComplaintId() : null;
-
-        // Step 2: Retrieve complaint DTO based on complaint ID (assuming complaintId is obtained somehow)
-        //int complaintId = raiseComplaintDto.getComplaintId(); // You need to define how you get the complaintId
-        RaiseComplaintDto raiseComplaintDto1 = raiseComplaintService.findByComplaintId(complaintId);
-
-        // Step 3: Add the complaint DTO to the model
-        model.addAttribute("raiseComplaintDto", raiseComplaintDto);
-
-        // Step 4: Return the view name
-        return "ViewComplaint"; // Assuming "ComplaintView" is your view name
+    public String viewRaiseComplaint(Model model, @ModelAttribute("signupDto") SignupDto signupDto) {
+        int userId = signupDto.getId();
+        List<RaiseComplaintDto> complaints = raiseComplaintService.getComplaintsByUserId(userId);
+        model.addAttribute("viewRaiseComplaints", complaints);
+        return "ViewComplaint";
     }
 
-    @GetMapping("edit-complaint")
-    public String editComplaint(@RequestParam("complaintId")int complaintId)
-    {
-        System.out.println("Running editComplaint running in RaiseComplaintController ");
-        RaiseComplaintDto raiseComplaintDto1 = raiseComplaintService.findByComplaintId(complaintId);
-
+    @GetMapping("/edit-complaint/{complaintId}")
+    public String showEditComplaintForm(@PathVariable("complaintId") int complaintId, Model model) {
+        RaiseComplaintDto raiseComplaintDto = raiseComplaintService.getComplaintById(complaintId);
+        model.addAttribute("raiseComplaintDto", raiseComplaintDto);//values should be retain in page
         return "EditRaiseComplaint";
     }
 
+
+//update
+    @PostMapping("/update-complaint")
+    public String updateComplaint(@ModelAttribute("raiseComplaintDTO") RaiseComplaintDto raiseComplaintDTO, Model model) {
+        List<RaiseComplaintDto> isUpdated= raiseComplaintService.updateRaiseComplaintUserDetails(raiseComplaintDTO);
+        if (isUpdated!=null) {
+            model.addAttribute("updateMsg", "Complaint updated successfully!");
+            model.addAttribute("viewRaiseComplaints",isUpdated);
+            return "ViewComplaint";
+        } else {
+            model.addAttribute("updateMsg", "Failed to update complaint. Please try again.");
+        }
+        return "EditComplaint";
+    }
 }
+

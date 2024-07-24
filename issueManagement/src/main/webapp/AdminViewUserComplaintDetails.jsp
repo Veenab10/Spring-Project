@@ -24,11 +24,7 @@
                          </button>
 
                          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                             <li><a class="dropdown-item" href="ResetPassword.jsp">Reset Password</a></li>
-                             <li><a class="dropdown-item" href="edit-profile">Edit Profile</a></li>
-                             <li><a class="dropdown-item" href="view-profile">View Profile</a></li>
-                              <li><a class="dropdown-item" href="view-complaint">view-complaint</a></li>
-                              <li><a class="dropdown-item" href="RaiseComplaint.jsp">RaiseComplaint</a></li>
+                             <li><a class="dropdown-item" href="AdminProfile.jsp">AdminProfile</a></li>
                          </ul>
              </div>
          </nav>
@@ -51,7 +47,7 @@
                             <th>Area</th>
                             <th>Address</th>
                             <th>Description</th>
-                            <th>Edit</th>
+
 
                         </tr>
                     </thead>
@@ -67,8 +63,6 @@
                                 <td>${viewRaiseComplaint.area}</td>
                                 <td>${viewRaiseComplaint.address}</td>
                                 <td>${viewRaiseComplaint.description}</td>
-
-                               <td><a href="edit-complaint/${viewRaiseComplaint.complaintId}">Edit</a></td>
 
                             </tr>
                         </c:forEach>

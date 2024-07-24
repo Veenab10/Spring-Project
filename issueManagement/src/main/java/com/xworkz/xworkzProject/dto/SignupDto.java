@@ -51,7 +51,7 @@ public class SignupDto {
     private Integer count = 0;
 
     @Column(name = "account_locked")
-    private boolean accountLocked=false;
+    private boolean accountLocked=false;//changed false
 
     //lock account
     @Column(name = "failed_attempts")
