@@ -1,18 +1,16 @@
-<%@ page isELIgnored="false"%>
+<%@ page  isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
-    <title>Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script  src="/issueManagement/js/RaiseComplaint.js"></script>
+<title>Index</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-dark bg-primary">
                  <div class="container-fluid">
                      <div class="navbar-header">
@@ -35,73 +33,80 @@
              </div>
          </nav>
 
-  <form action="raise-complaint" method="post">
+<form action="search-user-complaints" method="post">
 
-      <div class="d-flex justify-content-center mt-3 mb-3 align-items-center vh-5">
-          <div class="card" style="width: 30rem;">
-              <div class="card-body">
-                  <center><h5 class="card-title">Raise Complaint Form</h5></center>
-                  <hr>
-                  <strong style="color:green"/>${user}</strong>
-                  <strong style="color:green"/>${raiseComplaintSucess}</strong>
-                  <strong style="color:red"/>${ErrorRaiseComplaintSucess}</strong>
+<div class="d-flex justify-content-center mt-3 mb-2 align-items-center vh-80">
+<div class="card" style="width: 50rem;">
+  <div class="card-body">
+   <center> <h5 class="card-title">Search RaiseComplaint Form</h5></center>
+    <div class="row mb-3">
+         <span id="countryNameError"></span>
+             <label for="countryName" class="form-label">Complaint Type:</label>
+                <select class="form-select custom-select-width" id="complaintType" name="complaintType"  placeholder="Complaint Type">
+                       <option ${dto.complaintType==null ? 'selected' : ''}  selected value=" "></option>
+                        <option value="Water Supply" ${dto.complaintType eq 'Water Supply' ? 'selected' : ''}>Water Supply</option>
+                         <option value="System Problem"  ${dto.complaintType eq 'System Problem' ? 'selected' : ''}>System Problem</option>
+                         <option value="Network Problem"  ${dto.complaintType eq 'Network Problem' ? 'selected' : ''}>Network Problem</option>
+                         <option value="Electrical Problem"  ${dto.complaintType eq 'Electrical Problem' ? 'selected' : ''}>Electrical Problem</option>
+                         <option value="Noise Problem"  ${dto.complaintType eq 'GMIT' ? 'selected' : ''}>Noise Problem</option>
+                </select>
+                </div>
 
-                   <div class="row mb-3">
-                         <span id="countryNameError"></span>
-                         <label for="countryName" class="form-label">Complaint Type:</label>
-                         <select class="form-select custom-select-width" id="complaintType" name="complaintType"  placeholder="Complaint Type">
-                               <option ${dto.complaintType==null ? 'selected' : ''}  selected value=" "></option>
-                               <option value="Water Supply" ${dto.complaintType eq 'Water Supply' ? 'selected' : ''}>Water Supply</option>
-                               <option value="System Problem"  ${dto.complaintType eq 'System Problem' ? 'selected' : ''}>System Problem</option>
-                               <option value="Network Problem"  ${dto.complaintType eq 'Network Problem' ? 'selected' : ''}>Network Problem</option>
-                               <option value="Electrical Problem"  ${dto.complaintType eq 'Electrical Problem' ? 'selected' : ''}>Electrical Problem</option>
-                               <option value="Noise Problem"  ${dto.complaintType eq 'GMIT' ? 'selected' : ''}>Noise Problem</option>
-                           </select>
+         <!----City ---!>
 
-                       </div>
-          <div class="container mt-5 mb-5">
-                  <div class="card">
-                      <div class="card-header">
-                          <h3><b>View Raised Complaint</b></h3>
-                      </div>
-                      <div class="card-body">
-                          <table class="table table-bordered">
-                              <thead>
-                                  <tr>
-                                      <th>Serial Number</th>
-                                      <th>ID</th>
-                                      <th>Complaint Type</th>
-                                      <th>Country</th>
-                                      <th>State</th>
-                                      <th>City</th>
-                                      <th>Area</th>
-                                      <th>Address</th>
-                                      <th>Description</th>
+         <div class="row mb-3">
+                     <label for="city" class="form-label">City Name:</label>
+                     <input type="text" id="city" name="city" placeholder="Enter city Name">
+          </div>
 
+      <div>
+      <center><button type="submit" class="btn btn-primary">Submit</button><center>
+      </div>
 
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  <c:forEach var="viewRaiseComplaint" items="${search-user-complaints}" varStatus="status">
-                                      <tr>
-                                          <td>${status.index + 1 }</td>
-                                          <td>${viewRaiseComplaint.complaintId}</td>
-                                          <td>${viewRaiseComplaint.complaintType}</td>
-                                          <td>${viewRaiseComplaint.country}</td>
-                                          <td>${viewRaiseComplaint.state}</td>
-                                          <td>${viewRaiseComplaint.city}</td>
-                                          <td>${viewRaiseComplaint.area}</td>
-                                          <td>${viewRaiseComplaint.address}</td>
-                                          <td>${viewRaiseComplaint.description}</td>
+  </div>
+</div>
+</div>
 
-                                      </tr>
-                                  </c:forEach>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
+</form>
 
+<div class="d-flex justify-content-center mt-3 mb-2 align-items-center vh-80">
+<div class="card" >
+  <div class="card-body">
+    <strong style="color:green;">Search result for , ${complaintType}</strong>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Serial Number</th>
+      <th scope="col">ID </th>
+      <th scope="col">Complaint Type</th>
+      <th scope="col">Country</th>
+      <th scope="col">State</th>
+      <th scope="col">City</th>
+      <th scope="col">Area</th>
+      <th scope="col">Address</th>
+      <th scope="col">Description</th>
 
-              </body>
-              </html>
+    </tr>
+  </thead>
+  <tbody>
+       <c:forEach items="${listOfComplaintType}" var="searchRaiseComplaint" varStatus="status">
+              <tr>
+              <td>${status.index + 1 }</td>
+                  <td>${searchRaiseComplaint.complaintId}</td>
+                   <td>${searchRaiseComplaint.complaintType}</td>
+                    <td>${searchRaiseComplaint.country}</td>
+                    <td>${searchRaiseComplaint.state}</td>
+                     <td>${searchRaiseComplaint.city}</td>
+                     <td>${searchRaiseComplaint.area}</td>
+                     <td>${searchRaiseComplaint.address}</td>
+                     <td>${searchRaiseComplaint.description}</td>
+
+              </tr>
+       </c:forEach>
+
+  </tbody>
+</table>
+
+</body>
+</html>
+

@@ -16,6 +16,9 @@ public interface AdminService {
     //findByComplaintId for admin view
     List<RaiseComplaintDto> findByUSerComplaintId();
 
-    //findByComplaintType for admin view
-    List<RaiseComplaintDto> findByUserComplaintType(String complaintType);
+    //findByComplaintTypeAndcity for admin view
+    List<RaiseComplaintDto> searchByUserComplaintTypeAndCity(String complaintType,String city);
+
+    //findByComplaintTypeORcity for admin view
+    List<RaiseComplaintDto> searchByUserComplaintTypeOrCity(String complaintType,String city);
 }

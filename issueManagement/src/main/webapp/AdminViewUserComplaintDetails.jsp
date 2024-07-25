@@ -47,6 +47,7 @@
                             <th>Area</th>
                             <th>Address</th>
                             <th>Description</th>
+                            <th>User Id</th>
 
 
                         </tr>
@@ -63,6 +64,7 @@
                                 <td>${viewRaiseComplaint.area}</td>
                                 <td>${viewRaiseComplaint.address}</td>
                                 <td>${viewRaiseComplaint.description}</td>
+                                <td>${viewRaiseComplaint.userId}</td>
 
                             </tr>
                         </c:forEach>

@@ -96,13 +96,14 @@ public class AdminRepoImpl implements  AdminRepo {
     }
 
     @Override
-    public List<RaiseComplaintDto> findByUserComplaintType(String complaintType) {
-        System.out.println("Running findByUserComplaintType method in AdminRepoImpl... ");
+    public List<RaiseComplaintDto> searchByUserComplaintTypeAndCity(String complaintType,String city) {
+        System.out.println("Running searchByUserComplaintTypeAndCity method in AdminRepoImpl..");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            String query = "SELECT r FROM RaiseComplaintDto r where r.complaintType=:complaintType";
+            String query = "SELECT r FROM RaiseComplaintDto r where r.city=:city And r.complaintType=:complaintTypes";
             Query query1= entityManager.createQuery(query);
-            query1.setParameter("complaintType",complaintType);
+            query1.setParameter("complaintTypes",complaintType);
+            query1.setParameter("city",city);
             List<RaiseComplaintDto> data = query1.getResultList();
             System.out.println("Data size:" + data.size()); // Print the number of records fetched
             return data;
@@ -117,29 +118,31 @@ public class AdminRepoImpl implements  AdminRepo {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public List<RaiseComplaintDto> searchByUserComplaintTypeOrCity(String complaintType, String city) {
+        System.out.println("Running searchByUserComplaintTypeOrCity method in AdminRepoImpl..");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            String query = "SELECT r FROM RaiseComplaintDto r where r.city=:city OR r.complaintType=:complaintTypes";
+            Query query1= entityManager.createQuery(query);
+            query1.setParameter("complaintTypes",complaintType);
+            query1.setParameter("city",city);
+            List<RaiseComplaintDto> data = query1.getResultList();
+            System.out.println("Data size:" + data.size()); // Print the number of records fetched
+            return data;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+
+        }
+        finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
 }
 
 
-//    @Override
-//    public List<SignupDto> findByUSerId(SignupDto signupDto) {
-//        System.out.println("Running findByUSerId  method in AdminRepoImpl...");
-//        EntityManager entityManager=entityManagerFactory.createEntityManager();
-//        try {
-//            String query="Select s from SignupDto s";
-//            Query query1=entityManager.createQuery(query);
-//            List<SignupDto> signupDto1=query1.getResultList();
-//            System.out.println("data:"+signupDto1);
-//            return signupDto1;
-//
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//
-//        }
-//        finally {
-//            entityManager.close();
-//        }
-//        return Collections.emptyList();
-//    }
-//}

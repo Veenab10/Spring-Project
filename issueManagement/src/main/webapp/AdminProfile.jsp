@@ -26,7 +26,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="view-user-details">View Users Profile </a></li>
                         <li><a class="dropdown-item" href="view-user-complaints">View Users Complaints</a></li>
-                        <li><a class="dropdown-item" href="search-user-complaints">AdminViewUserComplaintsSearchDetails</a></li>
+                        <li><a class="dropdown-item" href="AdminViewUserComplaintsSearchDetails.jsp">AdminViewUserComplaintsSearchDetails</a></li>
 
 
                     </ul>

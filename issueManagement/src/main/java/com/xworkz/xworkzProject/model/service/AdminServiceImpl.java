@@ -72,18 +72,35 @@ public class AdminServiceImpl implements AdminService {
         return Collections.emptyList();
     }
 
+
     @Override
-    public List<RaiseComplaintDto> findByUserComplaintType(String complaintType) {
-        System.out.println("Running findByUserComplaintType method in AdminServiceImpl...");
-        List<RaiseComplaintDto> raiseComplaintDtos=adminRepo.findByUserComplaintType(complaintType);
-        if(raiseComplaintDtos!=null)
+    public List<RaiseComplaintDto> searchByUserComplaintTypeAndCity(String complaintType,String city) {
+        System.out.println("Running searchByUserComplaintTypeAndCity method in AdminServiceImpl...");
+        List<RaiseComplaintDto> raiseComplaintDtos=adminRepo.searchByUserComplaintTypeAndCity(complaintType,city);
+        if(raiseComplaintDtos.isEmpty())
         {
-            System.out.println("findByComplaintType data successful in AdminServiceImpl..");
+            System.out.println("searchByUserComplaintTypeAndCity data successful in AdminServiceImpl..");
             return raiseComplaintDtos;
         }
         else
         {
-            System.out.println("findByComplaintType data not successful in AdminServiceImpl..");
+            System.out.println("searchByUserComplaintTypeAndCity data not successful in AdminServiceImpl..");
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<RaiseComplaintDto> searchByUserComplaintTypeOrCity(String complaintType, String city) {
+        System.out.println("Running searchByUserComplaintTypeOrCity method in AdminServiceImpl...");
+        List<RaiseComplaintDto> raiseComplaintDtos=adminRepo.searchByUserComplaintTypeOrCity(complaintType,city);
+        if(raiseComplaintDtos.isEmpty())
+        {
+            System.out.println("searchByUserComplaintTypeOrCity data successful in AdminServiceImpl..");
+            return raiseComplaintDtos;
+        }
+        else
+        {
+            System.out.println("searchByUserComplaintTypeOrCity data not successful in AdminServiceImpl..");
         }
         return Collections.emptyList();
     }
