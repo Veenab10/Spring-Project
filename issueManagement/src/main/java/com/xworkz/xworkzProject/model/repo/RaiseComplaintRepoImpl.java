@@ -58,13 +58,21 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
     public List<RaiseComplaintDto> findByRaiseComplaint(int id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
+            // Correct JPQL query with proper ordering
             TypedQuery<RaiseComplaintDto> query = entityManager.createQuery(
-                    "SELECT r FROM RaiseComplaintDto r WHERE r.userId.id = :userId", RaiseComplaintDto.class);
+                    "SELECT r FROM RaiseComplaintDto r WHERE r.userId.id = :userId ORDER BY r.complaintId DESC",
+                    RaiseComplaintDto.class);
             query.setParameter("userId", id);
+
+            // Execute the query and get the results
             List<RaiseComplaintDto> results = query.getResultList();
-            //log.info("Found {} complaints for user ID {}", results.size(), id);
+
+            // Optionally log the results size
+            // log.info("Found {} complaints for user ID {}", results.size(), id);
+
             return results;
         } finally {
+            // Ensure the EntityManager is closed
             entityManager.close();
         }
     }

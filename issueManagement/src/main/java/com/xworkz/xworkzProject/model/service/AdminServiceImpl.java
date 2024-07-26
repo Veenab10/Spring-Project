@@ -77,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
     public List<RaiseComplaintDto> searchByUserComplaintTypeAndCity(String complaintType,String city) {
         System.out.println("Running searchByUserComplaintTypeAndCity method in AdminServiceImpl...");
         List<RaiseComplaintDto> raiseComplaintDtos=adminRepo.searchByUserComplaintTypeAndCity(complaintType,city);
-        if(raiseComplaintDtos.isEmpty())
+        if(!raiseComplaintDtos.isEmpty())
         {
             System.out.println("searchByUserComplaintTypeAndCity data successful in AdminServiceImpl..");
             return raiseComplaintDtos;
@@ -89,11 +89,35 @@ public class AdminServiceImpl implements AdminService {
         return Collections.emptyList();
     }
 
+//    @Override
+//    public List<RaiseComplaintDto> searchByComplaintType(String complaintType) {
+//        System.out.println("Running searchByComplaintType method in AdminServiceImpl... ");
+//        List<RaiseComplaintDto> raiseComplaintDtoList=adminRepo.searchByComplaintType(complaintType);
+//        if(!raiseComplaintDtoList.isEmpty())
+//        {
+//            System.out.println("successfully searched list in AdminServiceImpl");
+//            return raiseComplaintDtoList;
+//        }
+//        return Collections.emptyList();
+//    }
+//
+//    @Override
+//    public List<RaiseComplaintDto> searchByCity(String city) {
+//        System.out.println("Running searchByCity method in AdminServiceImpl... ");
+//        List<RaiseComplaintDto> raiseComplaintDtoList=adminRepo.searchByCity(city);
+//        if(!raiseComplaintDtoList.isEmpty())
+//        {
+//            System.out.println("successfully searched list in AdminServiceImpl");
+//            return raiseComplaintDtoList;
+//        }
+//        return Collections.emptyList();
+//    }
+
     @Override
     public List<RaiseComplaintDto> searchByUserComplaintTypeOrCity(String complaintType, String city) {
         System.out.println("Running searchByUserComplaintTypeOrCity method in AdminServiceImpl...");
         List<RaiseComplaintDto> raiseComplaintDtos=adminRepo.searchByUserComplaintTypeOrCity(complaintType,city);
-        if(raiseComplaintDtos.isEmpty())
+        if(!raiseComplaintDtos.isEmpty())
         {
             System.out.println("searchByUserComplaintTypeOrCity data successful in AdminServiceImpl..");
             return raiseComplaintDtos;

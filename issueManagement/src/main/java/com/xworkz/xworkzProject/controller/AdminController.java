@@ -79,7 +79,6 @@ public class AdminController {
             return "AdminViewUserComplaintDetails";
         }
 
-
     }
 
     @PostMapping("/search-user-complaints")
@@ -89,18 +88,46 @@ public class AdminController {
         List<RaiseComplaintDto> listOfComplaintTypeAndCity = adminService.searchByUserComplaintTypeAndCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
         if (!listOfComplaintTypeAndCity.isEmpty()) {
             model.addAttribute("listOfComplaintType", listOfComplaintTypeAndCity);
-            return "AdminViewUserComplaintsSearchDetails";
+            return "AdminViewUserComplaintDetails";
         }
         else {
             List<RaiseComplaintDto> listOfComplaintTypeOrCity = adminService.searchByUserComplaintTypeOrCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
             if (!listOfComplaintTypeOrCity.isEmpty()) {
                 model.addAttribute("listOfComplaintType", listOfComplaintTypeOrCity);
-                return "AdminViewUserComplaintsSearchDetails";
+                return "AdminViewUserComplaintDetails";
             }
         }
 
-        return "AdminViewUserComplaintsSearchDetails";
+        return "AdminViewUserComplaintDetails";
     }
+
+//    @PostMapping("/search-user-complaints")
+//    public String searchUserComplaintDetails(RaiseComplaintDto raiseComplaintDto, Model model) {
+//        System.out.println("viewUserDetails method in AdminController..");
+//        List<RaiseComplaintDto> listOfComplaintType = adminService.searchByComplaintType(raiseComplaintDto.getComplaintType());
+//
+//        List<RaiseComplaintDto> listOfComplaintTypeAndCity = adminService.searchByUserComplaintTypeAndCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
+//        if (!listOfComplaintTypeAndCity.isEmpty()) {
+//            model.addAttribute("listOfComplaintType", listOfComplaintTypeAndCity);
+//            return "AdminViewUserComplaintDetails";
+//        }
+//
+//        else if (!listOfComplaintType.isEmpty()) {
+//                model.addAttribute("listOfComplaintType", listOfComplaintType);
+//                return "AdminViewUserComplaintDetails";
+//            }
+//
+//        else {
+//            List<RaiseComplaintDto> listOfCity = adminService.searchByCity(raiseComplaintDto.getCity());
+//            if (!listOfCity.isEmpty()) {
+//                System.out.println("Running city...");
+//                model.addAttribute("listOfComplaintType", listOfCity);
+//                return "AdminViewUserComplaintDetails";
+//            }
+//        }
+//
+//        return "AdminViewUserComplaintDetails";
+//    }
 }
 
 

@@ -76,7 +76,7 @@ public class AdminRepoImpl implements  AdminRepo {
         System.out.println("findById method in AdminRepoImpl...");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            String query = "SELECT r FROM RaiseComplaintDto r JOIN FETCH r.userId";
+            String query = "SELECT r FROM RaiseComplaintDto r JOIN FETCH r.userId ORDER BY r.complaintId DESC";
             Query query1= entityManager.createQuery(query);
             List<RaiseComplaintDto> data = query1.getResultList();
             System.out.println("Data size:" + data.size()); // Print the number of records fetched
@@ -91,7 +91,6 @@ public class AdminRepoImpl implements  AdminRepo {
            entityManager.close();
         }
 
-
         return Collections.emptyList();
     }
 
@@ -100,7 +99,7 @@ public class AdminRepoImpl implements  AdminRepo {
         System.out.println("Running searchByUserComplaintTypeAndCity method in AdminRepoImpl..");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            String query = "SELECT r FROM RaiseComplaintDto r where r.city=:city And r.complaintType=:complaintTypes";
+            String query = "SELECT r FROM RaiseComplaintDto r WHERE r.city = :city AND r.complaintType = :complaintType ORDER BY r.complaintId DESC";
             Query query1= entityManager.createQuery(query);
             query1.setParameter("complaintTypes",complaintType);
             query1.setParameter("city",city);
@@ -111,13 +110,57 @@ public class AdminRepoImpl implements  AdminRepo {
         catch (Exception e)
         {
             e.printStackTrace();
-
         }
         finally {
             entityManager.close();
         }
         return Collections.emptyList();
     }
+
+//    @Override
+//    public List<RaiseComplaintDto> searchByComplaintType(String complaintType) {
+//        System.out.println("Running searchByComplaintType method in adminRepoIMpl... ");
+//        EntityManager entityManager=entityManagerFactory.createEntityManager();
+//        try {
+//            String query="Select r from RaiseComplaintDto r where r.complaintType=:complaintType";
+//            Query query1=entityManager.createQuery(query);
+//            query1.setParameter("complaintType",complaintType);
+//            List<RaiseComplaintDto> resultList=query1.getResultList();
+//            System.out.println("resultList"+resultList);
+//            return resultList;
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        finally {
+//            entityManager.close();
+//        }
+//
+//        return Collections.emptyList();
+//    }
+//
+//    @Override
+//    public List<RaiseComplaintDto> searchByCity(String city) {
+//        System.out.println("Running searchByCity method in adminRepoIMpl... ");
+//        EntityManager entityManager=entityManagerFactory.createEntityManager();
+//        try {
+//            String query="Select r from RaiseComplaintDto r where r.city=:city";
+//            Query query1=entityManager.createQuery(query);
+//            query1.setParameter("city",city);
+//            List<RaiseComplaintDto> resultList=query1.getResultList();
+//            System.out.println("resultList"+resultList);
+//            return resultList;
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        finally {
+//            entityManager.close();
+//        }
+//        return Collections.emptyList();
+//    }
 
     @Override
     public List<RaiseComplaintDto> searchByUserComplaintTypeOrCity(String complaintType, String city) {
