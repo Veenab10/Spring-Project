@@ -1,6 +1,7 @@
 package com.xworkz.xworkzProject.controller;
 
 import com.xworkz.xworkzProject.dto.AdminDto;
+import com.xworkz.xworkzProject.dto.DepartmentDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.service.AdminService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +91,7 @@ public class AdminController {
         if (!listOfComplaintTypeAndCity.isEmpty()) {
             model.addAttribute("listOfComplaintType", listOfComplaintTypeAndCity);
             return "AdminViewUserComplaintDetails";
-        }
-        else {
+        } else {
             List<RaiseComplaintDto> listOfComplaintTypeOrCity = adminService.searchByUserComplaintTypeOrCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
             if (!listOfComplaintTypeOrCity.isEmpty()) {
                 model.addAttribute("listOfComplaintType", listOfComplaintTypeOrCity);
@@ -101,33 +102,34 @@ public class AdminController {
         return "AdminViewUserComplaintDetails";
     }
 
-//    @PostMapping("/search-user-complaints")
-//    public String searchUserComplaintDetails(RaiseComplaintDto raiseComplaintDto, Model model) {
-//        System.out.println("viewUserDetails method in AdminController..");
-//        List<RaiseComplaintDto> listOfComplaintType = adminService.searchByComplaintType(raiseComplaintDto.getComplaintType());
-//
-//        List<RaiseComplaintDto> listOfComplaintTypeAndCity = adminService.searchByUserComplaintTypeAndCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
-//        if (!listOfComplaintTypeAndCity.isEmpty()) {
-//            model.addAttribute("listOfComplaintType", listOfComplaintTypeAndCity);
-//            return "AdminViewUserComplaintDetails";
-//        }
-//
-//        else if (!listOfComplaintType.isEmpty()) {
-//                model.addAttribute("listOfComplaintType", listOfComplaintType);
-//                return "AdminViewUserComplaintDetails";
-//            }
-//
-//        else {
-//            List<RaiseComplaintDto> listOfCity = adminService.searchByCity(raiseComplaintDto.getCity());
-//            if (!listOfCity.isEmpty()) {
-//                System.out.println("Running city...");
-//                model.addAttribute("listOfComplaintType", listOfCity);
-//                return "AdminViewUserComplaintDetails";
-//            }
-//        }
-//
-//        return "AdminViewUserComplaintDetails";
-//    }
+    @PostMapping("save-department")
+    public String saveDepartment(DepartmentDto departmentDto, Model model) {
+        System.out.println("Running saveDepartment method in admin controller...");
+        boolean saveDepartment = adminService.saveDepartment(departmentDto);
+        if (saveDepartment) {
+            System.out.println("saveDepartment successfully");
+            //model.addAttribute("savedsuccess", "save Department successfully");
+            //return "AdminProfile";
+            return "redirect:/department-profile";
+
+        }
+        System.out.println("saveDepartment not successfully");
+        //model.addAttribute("savedfailed", "save Department successfully");
+        return "redirect:/department";
+    }
+
+    @GetMapping("department")
+    public String save(DepartmentDto departmentDto, Model model) {
+        model.addAttribute("savedfailed", "save Department successfully");
+        return "AddDepartment";
+    }
+
+    @GetMapping("department-profile")
+    public String saved(DepartmentDto departmentDto, Model model) {
+        model.addAttribute("savedsuccess", "save Department successfully");
+        return "AdminProfile";
+    }
+
 }
 
 

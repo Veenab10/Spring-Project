@@ -67,6 +67,8 @@
                         <th>Address</th>
                         <th>Description</th>
                         <th>User ID</th>
+                        <th>Status</th>
+                        <th>Department Allowcation</th>
                     </tr>
                 </thead>
                 <tbody>

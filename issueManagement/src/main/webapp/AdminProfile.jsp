@@ -16,19 +16,15 @@
             <div class="container-fluid">
             <div class="navbar-header">
             <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
-
             </div>
-
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Admin
                      <!---   <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="50" height="50" class="rounded-circle">---!>
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="view-user-details">View Users Profile </a></li>
-                        <li><a class="dropdown-item" href="view-user-complaints">View Users Complaints</a></li>
-                        <li><a class="dropdown-item" href="AdminViewUserComplaintsSearchDetails.jsp">AdminViewUserComplaintsSearchDetails</a></li>
-
-
+                        <li><a class="dropdown-item" href="view-user-details">Users Profile </a></li>
+                        <li><a class="dropdown-item" href="view-user-complaints">Users Complaints</a></li>
+                        <li><a class="dropdown-item" href="AddDepartment.jsp">AddDepartment</a></li>
                     </ul>
         </div>
     </nav>

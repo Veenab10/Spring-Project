@@ -1,6 +1,7 @@
 package com.xworkz.xworkzProject.model.service;
 
 import com.xworkz.xworkzProject.dto.AdminDto;
+import com.xworkz.xworkzProject.dto.DepartmentDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 import com.xworkz.xworkzProject.dto.SignupDto;
 
@@ -22,9 +23,6 @@ public interface AdminService {
     //findByComplaintTypeORcity for admin view
     List<RaiseComplaintDto> searchByUserComplaintTypeOrCity(String complaintType,String city);
 
-    //findByComplaintType for admin view
-    //List<RaiseComplaintDto> searchByComplaintType(String complaintType);
-
-    //findByCity for admin view
-    //List<RaiseComplaintDto> searchByCity(String city);
+    //savingdepartment
+    boolean saveDepartment(DepartmentDto departmentDto);
 }

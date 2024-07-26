@@ -1,6 +1,7 @@
 package com.xworkz.xworkzProject.model.service;
 
 import com.xworkz.xworkzProject.dto.AdminDto;
+import com.xworkz.xworkzProject.dto.DepartmentDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.repo.AdminRepo;
@@ -127,6 +128,19 @@ public class AdminServiceImpl implements AdminService {
             System.out.println("searchByUserComplaintTypeOrCity data not successful in AdminServiceImpl..");
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean saveDepartment(DepartmentDto departmentDto) {
+        System.out.println("Running saveDepartment method in AdminServiceImpl... ");
+        boolean saveDepartment=adminRepo.saveDepartment(departmentDto);
+        if(saveDepartment)
+        {
+            System.out.println("Save department successfully"+departmentDto);
+            return true;
+        }
+        System.out.println("not saved department successfully"+departmentDto);
+        return false;
     }
 
 }
