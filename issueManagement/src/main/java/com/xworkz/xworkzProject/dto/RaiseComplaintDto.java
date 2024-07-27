@@ -14,7 +14,7 @@ public class RaiseComplaintDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "complaint_id")
-    private  int complaintId;
+    private  Long complaintId;
 
     @Column(name = "complaint_type")
     private String complaintType;
@@ -37,11 +37,11 @@ public class RaiseComplaintDto {
     @Column(name = "description")
     private String description;
 
-    public int getComplaintId() {
+    public Long getComplaintId() {
         return complaintId;
     }
 
-    public void setComplaintId(int complaintId) {
+    public void setComplaintId(Long complaintId) {
         this.complaintId = complaintId;
     }
 
@@ -115,6 +115,29 @@ public class RaiseComplaintDto {
         this.userId = userId;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private DepartmentDto department;
+
+    public DepartmentDto getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentDto department) {
+        this.department = department;
+    }
+
+    @Column(name = "status")
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "RaiseComplaintDto{" +
@@ -127,6 +150,8 @@ public class RaiseComplaintDto {
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
                 ", userId=" + userId +
+                ", department=" + department +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

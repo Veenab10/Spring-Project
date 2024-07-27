@@ -10,7 +10,7 @@ public class DepartmentDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "department_id")
-    private int id;
+    private Long id;
 
     @Column(name = "department_name")
     private String departmentName;
@@ -21,11 +21,11 @@ public class DepartmentDto {
     @Column(name = "department_city")
     private String city;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,7 +55,7 @@ public class DepartmentDto {
 
     @Override
     public String toString() {
-        return "AddDepartmentDto{" +
+        return "DepartmentDto{" +
                 "id=" + id +
                 ", departmentName='" + departmentName + '\'' +
                 ", address='" + address + '\'' +

@@ -67,7 +67,7 @@ public class RaiseComplaintController {
 
     @GetMapping("/edit-complaint/{complaintId}")
     public String showEditComplaintForm(@PathVariable("complaintId") int complaintId, Model model) {
-        RaiseComplaintDto raiseComplaintDto = raiseComplaintService.getComplaintById(complaintId);
+        RaiseComplaintDto raiseComplaintDto = raiseComplaintService.getComplaintById((long) complaintId);
         model.addAttribute("raiseComplaintDto", raiseComplaintDto);//values should be retain in page
         return "EditRaiseComplaint";
     }

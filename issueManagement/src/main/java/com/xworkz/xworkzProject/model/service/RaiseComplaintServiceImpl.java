@@ -5,7 +5,6 @@ import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.repo.RaiseComplaintRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,6 +52,8 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService {
     }
 
 
+
+
     @Override
     public List<RaiseComplaintDto> getComplaintsByUserId(int userId) {
         return raiseComplaintRepo.findByRaiseComplaint(userId);
@@ -60,8 +61,7 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService {
 
     //edit
 
-    @Override
-    public RaiseComplaintDto getComplaintById(int complaintId) {
+    public RaiseComplaintDto getComplaintById(Long complaintId) {
         return raiseComplaintRepo.findByComplaintId(complaintId).orElse(null);
     }
 

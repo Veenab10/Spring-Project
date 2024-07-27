@@ -91,7 +91,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
 //    @Override
-//    public List<RaiseComplaintDto> searchByComplaintType(String complaintType) {
+//    public List<RaiseComplaintDto> getListOfComplaintTypes(String complaintType) {
 //        System.out.println("Running searchByComplaintType method in AdminServiceImpl... ");
 //        List<RaiseComplaintDto> raiseComplaintDtoList=adminRepo.searchByComplaintType(complaintType);
 //        if(!raiseComplaintDtoList.isEmpty())
@@ -141,6 +141,17 @@ public class AdminServiceImpl implements AdminService {
         }
         System.out.println("not saved department successfully"+departmentDto);
         return false;
+    }
+
+    public List<DepartmentDto> getAllDepartments() {
+        return adminRepo.getAllDepartments(); // Retrieve all departments
+    }
+
+    @Override
+    public void allocateDepartment(Long complaintId, Long departmentId,String status) {
+        System.out.println("Running  allocateDepartment method in adminserviceimpl...");
+        // Delegate the department allocation to the repository
+        adminRepo.allocateDepartment(complaintId, departmentId,status);
     }
 
 }

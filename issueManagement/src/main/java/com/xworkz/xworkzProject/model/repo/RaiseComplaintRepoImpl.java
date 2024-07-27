@@ -1,6 +1,5 @@
 package com.xworkz.xworkzProject.model.repo;
 
-import com.xworkz.xworkzProject.dto.ImageUploadDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -80,7 +79,7 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
     //edit
 
     @Override
-    public Optional<RaiseComplaintDto> findByComplaintId(int complaintId) {
+    public Optional<RaiseComplaintDto> findByComplaintId(Long complaintId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             TypedQuery<RaiseComplaintDto> query = entityManager.createQuery(

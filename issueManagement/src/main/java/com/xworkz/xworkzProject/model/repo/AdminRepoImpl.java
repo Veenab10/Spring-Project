@@ -119,7 +119,7 @@ public class AdminRepoImpl implements  AdminRepo {
     }
 
 //    @Override
-//    public List<RaiseComplaintDto> searchByComplaintType(String complaintType) {
+//    public List<RaiseComplaintDto> getListOfComplaintTypes(String complaintType) {
 //        System.out.println("Running searchByComplaintType method in adminRepoIMpl... ");
 //        EntityManager entityManager=entityManagerFactory.createEntityManager();
 //        try {
@@ -140,7 +140,7 @@ public class AdminRepoImpl implements  AdminRepo {
 //
 //        return Collections.emptyList();
 //    }
-//
+
 //    @Override
 //    public List<RaiseComplaintDto> searchByCity(String city) {
 //        System.out.println("Running searchByCity method in adminRepoIMpl... ");
@@ -206,6 +206,69 @@ public class AdminRepoImpl implements  AdminRepo {
         }
         return true;
     }
+
+    @Override
+    public List<DepartmentDto> getAllDepartments() {
+        System.out.println("Running getAllDepartments method in admin repo implementation...");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            String query = "SELECT d FROM DepartmentDto d";
+            Query query1 = entityManager.createQuery(query);
+            List<DepartmentDto> resultList = query1.getResultList();
+            System.out.println("ResultList size: " + resultList.size());
+            return resultList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public void allocateDepartment(Long complaintId, Long departmentId,String status) {
+        System.out.println("Running allocateDepartment method in AdminRepoImpl...");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        try {
+            entityTransaction.begin();
+
+            // Find the complaint
+            RaiseComplaintDto complaint = entityManager.find(RaiseComplaintDto.class, complaintId);
+            if (complaint == null) {
+                throw new RuntimeException("Complaint not found for ID: " + complaintId);
+            }
+            System.out.println("Found complaint: " + complaint);
+
+            // Find the department
+            DepartmentDto department = entityManager.find(DepartmentDto.class, departmentId);
+            if (department == null) {
+                throw new RuntimeException("Department not found for ID: " + departmentId);
+            }
+            System.out.println("Found department: " + department);
+
+            // Set the department for the complaint
+            complaint.setDepartment(department);
+            complaint.setStatus(status);
+
+            // Merge the updated complaint
+            complaint = entityManager.merge(complaint);
+            System.out.println("Updated complaint after merge: " + complaint);
+
+            entityTransaction.commit();
+            System.out.println("Department allocated successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+        } finally {
+            entityManager.close();
+        }
+    }
+
+
+
 
 }
 

@@ -1,7 +1,6 @@
 package com.xworkz.xworkzProject.model.repo;
 
 
-import com.xworkz.xworkzProject.dto.ImageUploadDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public interface RaiseComplaintRepo {
     Optional<RaiseComplaintDto> findByUserId(int id);
 
     //complaint view
-    Optional<RaiseComplaintDto> findByComplaintId(int complaintId);
+    Optional<RaiseComplaintDto> findByComplaintId(Long complaintId);
 
     //edit
     List<RaiseComplaintDto> findByRaiseComplaint(int id);

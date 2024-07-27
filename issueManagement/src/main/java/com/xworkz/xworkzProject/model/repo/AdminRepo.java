@@ -25,7 +25,13 @@ public interface AdminRepo {
     //findByComplaintTypeORcity for admin view
     List<RaiseComplaintDto> searchByUserComplaintTypeOrCity(String complaintType,String city);
 
+    //List<RaiseComplaintDto> getListOfComplaintTypes(String complaintType);
     //savingdepartment
     boolean saveDepartment(DepartmentDto departmentDto);
+
+    //getAllDepartments
+    List<DepartmentDto> getAllDepartments();
+
+    void allocateDepartment(Long complaintId, Long departmentId, String status);
 
 }

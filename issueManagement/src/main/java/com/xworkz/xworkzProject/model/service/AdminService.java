@@ -25,4 +25,11 @@ public interface AdminService {
 
     //savingdepartment
     boolean saveDepartment(DepartmentDto departmentDto);
+
+    //List<RaiseComplaintDto> getListOfComplaintTypes(String complaintType);
+
+    //getAllDepartments
+    List<DepartmentDto> getAllDepartments();
+
+    void allocateDepartment(Long complaintId, Long departmentId,String status);
 }

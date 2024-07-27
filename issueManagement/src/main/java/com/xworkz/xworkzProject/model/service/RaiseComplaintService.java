@@ -15,7 +15,7 @@ public interface RaiseComplaintService {
     Optional<RaiseComplaintDto> findBySignedInUser(HttpServletRequest request);
 
     //edit complaint
-    RaiseComplaintDto getComplaintById(int complaintId);
+    RaiseComplaintDto getComplaintById(Long complaintId);
 
     //view complaint
     List<RaiseComplaintDto> getComplaintsByUserId(int userId);
