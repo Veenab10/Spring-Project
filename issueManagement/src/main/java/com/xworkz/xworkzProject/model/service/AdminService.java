@@ -1,9 +1,6 @@
 package com.xworkz.xworkzProject.model.service;
 
-import com.xworkz.xworkzProject.dto.AdminDto;
-import com.xworkz.xworkzProject.dto.DepartmentDto;
-import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
-import com.xworkz.xworkzProject.dto.SignupDto;
+import com.xworkz.xworkzProject.dto.*;
 
 import java.util.List;
 
@@ -32,4 +29,12 @@ public interface AdminService {
     List<DepartmentDto> getAllDepartments();
 
     void allocateDepartment(Long complaintId, Long departmentId,String status);
+
+    //from here im going to save department admin details
+    boolean saveDepartmentAdmin(DepartmentAdminDto departmentAdminDto);
+
+    DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password);
+
+
+
 }

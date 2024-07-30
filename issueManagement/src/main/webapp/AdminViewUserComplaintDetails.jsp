@@ -53,11 +53,13 @@
 
 
     <!-- View of Raised Complaints -->
-    <div class="card mt-8">
-        <div class="card-header">
+    <div class="container mt-3 mb-3 align-items-center vh-5">
+         <div class="card" style="width: 750%; max-width: 1400px;">
+
+            <div class="card-header">
             <h3><b>User Complaints</b></h3>
         </div>
-        <div class="card-body">
+        <div class="card-body ">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -95,7 +97,6 @@
                             <td >
                             <div style="width:110px;">
 
-
                              <input type="hidden" name="complaintId" value="${complaint.complaintId}" id="complaintId">
                             <select class="form-select" name="status" id="status">
                             <option selected >${complaint.status}</option>
@@ -121,9 +122,9 @@
                         </tr>
                     </c:forEach>
 
-
                 </tbody>
             </table>
+        </div>
         </div>
     </div>
 </div>

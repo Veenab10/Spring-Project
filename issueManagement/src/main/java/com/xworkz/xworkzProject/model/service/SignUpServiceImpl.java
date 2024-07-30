@@ -51,7 +51,6 @@ public class SignUpServiceImpl  implements SignUpService{
         boolean save=signUpRepo.save(signupDto);
         if(save){
             signupDto.setPassword(password);
-            //sendPassword(signupDto);
             mailSending.sendPassword(signupDto);
             return  true;
         }

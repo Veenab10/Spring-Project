@@ -1,5 +1,6 @@
 package com.xworkz.xworkzProject.emailSending;
 
+import com.xworkz.xworkzProject.dto.DepartmentAdminDto;
 import com.xworkz.xworkzProject.dto.SignupDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -50,6 +51,31 @@ public class MailSending {
                 "XworkzProject Team");
         javaMailSender.send(message);
     }
+
+
+//    public void sendDepartmentPassword(DepartmentAdminDto departmentAdminDto) {
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(departmentAdminDto.getDepartmentAdminEmailId());
+//        message.setSubject("Department Admin Password");
+//        message.setText("Dear " + departmentAdminDto.getDepartmentAdminName() + " "  + ",Your Department admin password is,\n\n" +
+//                "Please Sign in through this password: "+ "\n\n" +departmentAdminDto.getDepartmentAdminPassword()+"\n\n"+
+//                "Thanks and Regards,\n" + " " +
+//                "XworkzProject Team");
+//        javaMailSender.send(message);
+//    }
+
+    public void sendDepartmentPassword(DepartmentAdminDto departmentAdminDto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(departmentAdminDto.getDepartmentAdminEmailId());
+        message.setSubject("Department Admin password");
+        message.setText("Dear " + departmentAdminDto.getDepartmentAdminName() + " " +  ", You have been successfully Signed Up,\n\n" +
+                "Please Sign in through this password: " + departmentAdminDto.getDepartmentAdminPassword() + "\n\n" +
+                "Thanks and Regards,\n" + " " +
+                "XworkzProject Team");
+        javaMailSender.send(message);
+    }
+
+
 
 
 }

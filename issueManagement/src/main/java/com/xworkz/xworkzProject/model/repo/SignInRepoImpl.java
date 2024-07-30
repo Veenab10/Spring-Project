@@ -25,13 +25,11 @@ public class SignInRepoImpl  implements SignInRepo{
             Query query =entityManager.createQuery("Select s from SignupDto s where s.emailId=:emailId");
             query.setParameter("emailId",email);
             SignupDto signupDto= (SignupDto) query.getSingleResult();
-            //entityTransaction.commit();
             return signupDto;
         }
         catch (PersistenceException persistenceException)
         {
             persistenceException.getStackTrace();
-            //entityTransaction.rollback();
         }
         finally {
             entityManager.close();
@@ -48,13 +46,11 @@ public class SignInRepoImpl  implements SignInRepo{
             query.setParameter("emailId",emailId);
             query.setParameter("password",password);
             SignupDto signupDto= (SignupDto) query.getSingleResult();
-            //entityTransaction.commit();
             return signupDto;
         }
         catch (PersistenceException persistenceException)
         {
             persistenceException.getStackTrace();
-            //entityTransaction.rollback();
         }
         finally {
             entityManager.close();
