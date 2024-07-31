@@ -5,6 +5,7 @@ import com.xworkz.xworkzProject.emailSending.MailSending;
 import com.xworkz.xworkzProject.model.repo.AdminRepo;
 import com.xworkz.xworkzProject.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -236,36 +237,139 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
-}
+    @Override
+    public boolean adminForgotPassword(String email) {
+        System.out.println("Running forgotPassword in ForgetPasswordServiceImpl.. ");
+        DepartmentAdminDto departmentAdminDto=adminRepo.findByEmailId(email);
+        if(departmentAdminDto!=null)
+        {
+            //Generating Random password and sending it...
+            String newPassword=generatePassword();
+            departmentAdminDto.setDepartmentAdminPassword(passwordEncoder.encode(newPassword));
+            // signupDto.setPassword(encoder.encode(newPassword));
+            adminRepo.updateDepartmentAdminDetails(departmentAdminDto);
+            departmentAdminDto.setDepartmentAdminPassword(newPassword);
+            //sendPassword(signupDto);
+            mailSending.adminForgotPassword(departmentAdminDto);
+
+            //Reset failed attempts
+            this.resetFailedAttempts(email);
+            this.unlockAccount(email);
+            System.out.println("(service)Data is existing "+departmentAdminDto);
+
+            return true;
+
+        }
+        else
+        {
+            System.out.println("(service) Data is not existing"+departmentAdminDto);
+        }
+        return false;
+    }
+
 
 //    @Override
-//    public boolean forgotPassword(String emailId) {
-//        System.out.println("Running forgotPassword in ForgetPasswordServiceImpl.. ");
-//        SignupDto signupDto=forgetPasswordRepo.findByEmailId(emailId);
-//        if(signupDto!=null)
-//        {
-//            //Generating Random password and sending it...
-//            String newPassword = generatePassword();
-//            // signupDto.setPassword(encoder.encode(newPassword));
-//            forgetPasswordRepo.updatePassword(emailId,encoder.encode(newPassword));
-//            signupDto.setPassword(newPassword);
-//            //sendPassword(signupDto);
-//            mailSending.forgotPassword(signupDto);
+//    public boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword) {
+//        System.out.println("Attempting to change password for email: " + email);
 //
-//            //Reset failed attempts
-//            accountLockService.resetFailedAttempts(emailId);
-//            accountLockService.unlockAccount(emailId);
-//            System.out.println("(service)Data is existing "+signupDto);
-//
-//            return true;
-//
+//        // Step 1: Check if newPassword matches confirmPassword
+//        if (!newPassword.equals(confirmPassword)) {
+//            System.out.println("New password and confirm password do not match.");
+//            return false;
 //        }
-//        else
-//        {
-//            System.out.println("(service) Data is not existing"+signupDto);
+//
+//        // Step 2: Retrieve SignupDto based on emailId
+//        DepartmentAdminDto departmentAdminDto = this.adminRepo.findByEmailId(email);
+//        if (departmentAdminDto == null) {
+//            System.out.println("User with email " + email + " not found.");
+//            return false; // User not found
 //        }
-//        return false;
+//        String storedPassword=departmentAdminDto.getDepartmentAdminPassword();
+//        System.out.println(storedPassword);
+//        // Step 3: Verify oldPassword matches the stored password
+//        if (!passwordEncoder.matches(oldPassword, storedPassword)){
+//            System.out.println("Old password verification failed for email: " + email);
+//            return false; // Old password doesn't match
+//        }
+//
+//        // Step 4: Encode and update the new password in SignupDto
+//        String password=generatePassword();
+//        departmentAdminDto.setDepartmentAdminPassword(passwordEncoder.encode(password));
+//
+//
+//        // Step 5: Save the updated password in the repository
+//        boolean save = adminRepo.updateDepartmentAdminDetails(departmentAdminDto);
+//
+//        // Step 6: Send email notification if password update was successful
+//        if (save) {
+//            System.out.println("Password updated successfully for email: " + email);
+//            try {
+//                departmentAdminDto.setDepartmentAdminPassword(password);
+//                mailSending.sendAdminResetPassword(departmentAdminDto, newPassword);
+//                return true; // Password successfully updated and email sent
+//            } catch (MailException e) {
+//                // Handle exception if email sending fails (log it or take appropriate action)
+//                e.printStackTrace();
+//                return false; // Indicate failure if email sending failed
+//            }
+//        }
+//
+//        return false; // Password update failed
 //    }
+
+    @Override
+    public boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword) {
+        System.out.println("Attempting to change password for email: " + email);
+
+        // Step 1: Check if newPassword matches confirmPassword
+        if (!newPassword.equals(confirmPassword)) {
+            System.out.println("New password and confirm password do not match.");
+            return false;
+        }
+
+        // Step 2: Retrieve SignupDto based on emailId
+        DepartmentAdminDto departmentAdminDto = this.adminRepo.findByEmailId(email);
+        if (departmentAdminDto == null) {
+            System.out.println("User with email " + email + " not found.");
+            return false; // User not found
+        }
+
+        String storedPassword = departmentAdminDto.getDepartmentAdminPassword();
+        System.out.println("Stored password: " + storedPassword);
+
+        // Step 3: Verify oldPassword matches the stored password
+        if (!passwordEncoder.matches(oldPassword, storedPassword)) {
+            System.out.println("Old password verification failed for email: " + email);
+            return false; // Old password doesn't match
+        }
+
+        // Step 4: Encode and update the new password in SignupDto
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+        departmentAdminDto.setDepartmentAdminPassword(encodedNewPassword);
+
+        // Step 5: Save the updated password in the repository
+        boolean save = adminRepo.updateDepartmentAdminDetails(departmentAdminDto);
+
+        // Step 6: Send email notification if password update was successful
+        if (save) {
+            System.out.println("Password updated successfully for email: " + email);
+            try {
+                mailSending.sendAdminResetPassword(departmentAdminDto, newPassword);
+                return true; // Password successfully updated and email sent
+            } catch (MailException e) {
+                // Handle exception if email sending fails (log it or take appropriate action)
+                e.printStackTrace();
+                return false; // Indicate failure if email sending failed
+            }
+        }
+
+        return false; // Password update failed
+    }
+
+
+
+}
+
 
 
 

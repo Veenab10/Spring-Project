@@ -199,37 +199,68 @@ public class AdminController {
 //
 
 
+    @PostMapping("/departmentAdmin-signIn")
+    public String signInSubmit(DepartmentAdminDto departmentAdminDto, Model model) {
+        System.out.println("Running signInDepartmentAdmin method in AdminController...");
+        DepartmentAdminDto adminDto = adminService.findByEmailIdAndPassword(departmentAdminDto.getDepartmentAdminEmailId(), departmentAdminDto.getDepartmentAdminPassword());
+        System.out.println("after recive the dto from service" + adminDto);
+        if (adminDto != null && !adminDto.isAccountLocked()) {
+            adminService.resetFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
+            model.addAttribute("Loginresult", "Login Succcessfully with," + departmentAdminDto.getDepartmentAdminEmailId());
+            System.out.println("(Controller) data are exists" + departmentAdminDto);
 
-@PostMapping("/departmentAdmin-signIn")
-public String signInSubmit(DepartmentAdminDto departmentAdminDto,Model model) {
-       System.out.println("Running signInDepartmentAdmin method in AdminController...");
-    DepartmentAdminDto adminDto=adminService.findByEmailIdAndPassword(departmentAdminDto.getDepartmentAdminEmailId(),departmentAdminDto.getDepartmentAdminPassword());
-    System.out.println("after recive the dto from service"+adminDto);
-    if (adminDto != null && !adminDto.isAccountLocked()) {
-        adminService.resetFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
-        model.addAttribute("Loginresult", "Login Succcessfully with," + departmentAdminDto.getDepartmentAdminEmailId());
-        System.out.println("(Controller) data are exists" + departmentAdminDto);
-
-        return "DepartmentAdminSignIn";
-
-    }
-    else {
-        adminService.incrementFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
-        int failedAttempts = adminService.getFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
-        System.out.println("Failed attempts for " + departmentAdminDto.getDepartmentAdminEmailId() + ": " + failedAttempts);
-        if (failedAttempts >= 3) {
-            adminService.lockAccount(departmentAdminDto.getDepartmentAdminEmailId()); // Lock account after 3 failed attempts
-            model.addAttribute("error", "Your account is locked due to too many failed attempts.");
-            model.addAttribute("accountLocked", true);
             return "DepartmentAdminSignIn";
+
         } else {
-            model.addAttribute("failed", "Invalid email id and password. Attempts: " + failedAttempts);
-            model.addAttribute("accountLocked", false);
-            System.out.println("(Controller) data are not exists" + departmentAdminDto);
-            return "DepartmentAdminSignIn";
+            adminService.incrementFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
+            int failedAttempts = adminService.getFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
+            System.out.println("Failed attempts for " + departmentAdminDto.getDepartmentAdminEmailId() + ": " + failedAttempts);
+            if (failedAttempts >= 3) {
+                adminService.lockAccount(departmentAdminDto.getDepartmentAdminEmailId()); // Lock account after 3 failed attempts
+                model.addAttribute("error", "Your account is locked due to too many failed attempts.");
+                model.addAttribute("accountLocked", true);
+                return "DepartmentAdminSignIn";
+            } else {
+                model.addAttribute("failed", "Invalid email id and password. Attempts: " + failedAttempts);
+                model.addAttribute("accountLocked", false);
+                System.out.println("(Controller) data are not exists" + departmentAdminDto);
+                return "DepartmentAdminSignIn";
+            }
         }
     }
-}
-}
+
+
+        @PostMapping("admin-forgot-password")
+        public String adminForgotPassword (@RequestParam("departmentAdminEmailId") String email, Model model)
+        {
+            System.out.println("Running forgetPassword method in ForgetPasswordController...");
+            boolean success = adminService.adminForgotPassword(email);
+            if (success) {
+                model.addAttribute("forgotMessage", "A new Password has been sent to your emailId.");
+                return "DepartmentAdminSignIn";
+            } else {
+                model.addAttribute("forgotError", "Email address not found.");
+                return "DepartmentAdminForgotPassword";
+            }
+
+        }
+
+    @PostMapping("admin-reset-password")
+    public String passwordReset(@RequestParam("departmentAdminEmailId")  String email, String oldPassword, String newPassword, String confirmPassword,Model model) {
+        System.out.println("email"+email+"old"+oldPassword+"new"+newPassword+"con"+confirmPassword);
+        boolean resetSuccessful = adminService.changePassword(email, oldPassword, newPassword, confirmPassword);
+        if (resetSuccessful) {
+            System.out.println("Password reset Successful: " + resetSuccessful);
+            model.addAttribute("passwordResetMessage", "Password reset successful");
+            return "DepartmentAdminResetPassword";
+        } else {
+            model.addAttribute("passwordResetError", "Failed to reset password. Please check your password");
+        }
+
+        return "DepartmentAdminResetPassword";
+    }
+    }
+
+
 
 

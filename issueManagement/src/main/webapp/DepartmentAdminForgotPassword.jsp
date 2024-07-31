@@ -16,13 +16,13 @@
     </div>
 </nav>
 
-<form action="forgot-password" method="post">
+<form action="admin-forgot-password" method="post">
 
 
     <div class="d-flex justify-content-center mt-3 mb-3 align-items-center vh-5">
         <div class="card" style="width: 30rem;">
             <div class="card-body">
-                <center><h5 class="card-title">ForgetPassword Form</h5></center>
+                <center><h5 class="card-title"> Admin ForgetPassword Form</h5></center>
                 <strong style="color:green"/>${Loginresult}</strong>
                 <strong style="color:green;">${forgotMessage}</strong>
                 <strong style="color:red;">${forgotError}</strong>

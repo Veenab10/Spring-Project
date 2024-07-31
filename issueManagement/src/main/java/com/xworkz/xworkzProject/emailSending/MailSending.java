@@ -53,17 +53,6 @@ public class MailSending {
     }
 
 
-//    public void sendDepartmentPassword(DepartmentAdminDto departmentAdminDto) {
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(departmentAdminDto.getDepartmentAdminEmailId());
-//        message.setSubject("Department Admin Password");
-//        message.setText("Dear " + departmentAdminDto.getDepartmentAdminName() + " "  + ",Your Department admin password is,\n\n" +
-//                "Please Sign in through this password: "+ "\n\n" +departmentAdminDto.getDepartmentAdminPassword()+"\n\n"+
-//                "Thanks and Regards,\n" + " " +
-//                "XworkzProject Team");
-//        javaMailSender.send(message);
-//    }
-
     public void sendDepartmentPassword(DepartmentAdminDto departmentAdminDto) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(departmentAdminDto.getDepartmentAdminEmailId());
@@ -74,6 +63,31 @@ public class MailSending {
                 "XworkzProject Team");
         javaMailSender.send(message);
     }
+
+    public void adminForgotPassword(DepartmentAdminDto departmentAdminDto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(departmentAdminDto.getDepartmentAdminEmailId());
+        message.setSubject(" Admin Forgot password");
+        message.setText("Dear " + departmentAdminDto.getDepartmentAdminName() +  ",Your forgot password is,\n\n" +departmentAdminDto.getDepartmentAdminPassword()+"\n"+
+                "Please Sign in through this password: "+ "\n\n" +
+                "Thanks and Regards,\n" + " " +
+                "XworkzProject Team");
+        javaMailSender.send(message);
+    }
+
+    public void sendAdminResetPassword(DepartmentAdminDto departmentAdminDto, String newPassword) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(departmentAdminDto.getDepartmentAdminEmailId());
+        message.setSubject("Changed Password");
+        message.setText("Dear " + departmentAdminDto.getDepartmentAdminName()  + ",Your Reset password is,\n\n" +newPassword+"\n"+
+                "Please Sign in through this password: "+ "\n\n" +
+                "Thanks and Regards,\n" + " " +
+                "XworkzProject Team");
+        javaMailSender.send(message);
+    }
+
+
+
 
 
 

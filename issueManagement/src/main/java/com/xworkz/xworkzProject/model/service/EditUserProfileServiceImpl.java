@@ -26,8 +26,6 @@ public class EditUserProfileServiceImpl implements EditUserProfileService {
     public SignupDto findByEmailId(String emailId){
         System.out.println("running findByID  method in CountryServiceImpl.. ");
 
-
-
         SignupDto res=editUserProfileRepo.findByEmailId(emailId);
 
         if(res!=null)

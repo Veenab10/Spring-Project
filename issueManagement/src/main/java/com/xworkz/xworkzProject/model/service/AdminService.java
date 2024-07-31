@@ -45,4 +45,7 @@ public interface AdminService {
 
     void unlockAccount(String email);
 
+    boolean adminForgotPassword(String email);
+
+    boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword);
 }
