@@ -30,6 +30,12 @@ public class DepartmentAdminDto {
     @Column(name = "department_admin_password")
     private String departmentAdminPassword;
 
+    @Column(name = "account_locked")
+    private boolean accountLocked=false;
+
+    @Column(name = "failed_attempts")
+    private int failedAttempts = 0;
+
     // Getters and setters...
 
 
@@ -89,6 +95,22 @@ public class DepartmentAdminDto {
         this.departmentAdminPassword = departmentAdminPassword;
     }
 
+    public boolean isAccountLocked() {
+        return accountLocked;
+    }
+
+    public void setAccountLocked(boolean accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
+    public int getFailedAttempts() {
+        return failedAttempts;
+    }
+
+    public void setFailedAttempts(int failedAttempts) {
+        this.failedAttempts = failedAttempts;
+    }
+
     @Override
     public String toString() {
         return "DepartmentAdminDto{" +
@@ -99,8 +121,8 @@ public class DepartmentAdminDto {
                 ", departmentAdminContactNumber=" + departmentAdminContactNumber +
                 ", departmentAdminAlternativeContactNumber=" + departmentAdminAlternativeContactNumber +
                 ", departmentAdminPassword='" + departmentAdminPassword + '\'' +
+                ", accountLocked=" + accountLocked +
+                ", failedAttempts=" + failedAttempts +
                 '}';
     }
-
-
 }

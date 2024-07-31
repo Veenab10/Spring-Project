@@ -6,7 +6,7 @@
     <title>Index</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script  src="/issueManagement/js/SignIn.js"></script>
-    <script>
+   <!--- <script>
         function disableButton() {
             var accountLocked = "${accountLocked}";
             if (accountLocked === "true") {
@@ -14,7 +14,7 @@
             }
         }
         window.onload = disableButton;
-    </script>
+    </script>---!>
 
 
 </head>
@@ -33,29 +33,30 @@
         <div class="card" style="width: 30rem;">
             <div class="card-body">
                 <center><h5 class="card-title">Department Admin SignIn Form</h5></center>
-                <strong style="color:green"/>${signInsuccess}</strong>
-                <strong style="color:red"/>${signInFailed}</strong>
+                <strong style="color:green"/>${Loginresult}</strong>
+                <strong style="color:red"/>${error}</strong>
+                <strong style="color:red;/">${failed}</strong>
 
 
                 <div class="form-group p-3">
                     <label for="emailId">Email ID</label>
-                    <input type="email" class="form-control" id="emailId" name="emailId"  onblur="emailValidation()"  placeholder="Enter Email ID" >
+                    <input type="email" class="form-control" id="departmentAdminEmailId" name="departmentAdminEmailId"  onblur="emailValidation()"  placeholder="Enter Email ID" >
                     <span id="emailError" style="color: red;"></span>
                 </div>
 
                 <div class="p-3">
                           <label for="exampleInputPassword1" class="form-label">Password</label>
-                          <input type="password" class="form-control" placeholder="Enter password" id="password" name="password" onblur="passwordValidation()" >
+                          <input type="password" class="form-control" placeholder="Enter password" id="departmentAdminPassword" name="departmentAdminPassword" onblur="passwordValidation()" >
                           <span id="passwordError" style="color:red;"></span>
-                        </div>
+                </div>
 
 
                 <div class="form-group p-3">
                     <center><input type="submit" class="btn btn-primary" id="submit" name="submit" value="SignIn" ></center>
                 </div>
-                <a href="Signup.jsp">Are you new Member?,Register here</a>
+                <a href="DepartmentAdmin.jsp">Are you new Member?,Register here</a>
                 <br>
-                <a href="ForgetPassword.jsp">ForgetPassword</a>
+                <a href="DepartmentAdminForgotPassword.jsp">ForgetPassword</a>
 
             </div>
         </div>

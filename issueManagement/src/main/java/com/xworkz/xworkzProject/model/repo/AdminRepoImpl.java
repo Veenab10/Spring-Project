@@ -51,18 +51,15 @@ public class AdminRepoImpl implements  AdminRepo {
 
         try {
             String query = "SELECT d FROM SignupDto d";
-            Query query1= entityManager.createQuery(query);
+            Query query1 = entityManager.createQuery(query);
             List<SignupDto> data = query1.getResultList();
             System.out.println("Data size:" + data.size()); // Print the number of records fetched
 
             return data;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
 
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
 
@@ -75,41 +72,35 @@ public class AdminRepoImpl implements  AdminRepo {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             String query = "SELECT r FROM RaiseComplaintDto r JOIN FETCH r.userId ORDER BY r.complaintId DESC";
-            Query query1= entityManager.createQuery(query);
+            Query query1 = entityManager.createQuery(query);
             List<RaiseComplaintDto> data = query1.getResultList();
             System.out.println("Data size:" + data.size()); // Print the number of records fetched
             return data;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
 
-       }
-        finally {
-           entityManager.close();
+        } finally {
+            entityManager.close();
         }
 
         return Collections.emptyList();
     }
 
     @Override
-    public List<RaiseComplaintDto> searchByUserComplaintTypeAndCity(String complaintType,String city) {
+    public List<RaiseComplaintDto> searchByUserComplaintTypeAndCity(String complaintType, String city) {
         System.out.println("Running searchByUserComplaintTypeAndCity method in AdminRepoImpl..");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             String query = "SELECT r FROM RaiseComplaintDto r WHERE r.city = :city AND r.complaintType = :complaintType ORDER BY r.complaintId DESC";
-            Query query1= entityManager.createQuery(query);
-            query1.setParameter("complaintTypes",complaintType);
-            query1.setParameter("city",city);
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("complaintTypes", complaintType);
+            query1.setParameter("city", city);
             List<RaiseComplaintDto> data = query1.getResultList();
             System.out.println("Data size:" + data.size()); // Print the number of records fetched
             return data;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
         return Collections.emptyList();
@@ -122,19 +113,16 @@ public class AdminRepoImpl implements  AdminRepo {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             String query = "SELECT r FROM RaiseComplaintDto r where r.city=:city OR r.complaintType=:complaintTypes";
-            Query query1= entityManager.createQuery(query);
-            query1.setParameter("complaintTypes",complaintType);
-            query1.setParameter("city",city);
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("complaintTypes", complaintType);
+            query1.setParameter("city", city);
             List<RaiseComplaintDto> data = query1.getResultList();
             System.out.println("Data size:" + data.size()); // Print the number of records fetched
             return data;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
 
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
         return Collections.emptyList();
@@ -143,18 +131,15 @@ public class AdminRepoImpl implements  AdminRepo {
     @Override
     public boolean saveDepartment(DepartmentDto departmentDto) {
         System.out.println("Running saveDepartment method AdminRepoImpl.. ");
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
-        EntityTransaction entityTransaction=entityManager.getTransaction();
-        try{
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        try {
             entityTransaction.begin();
             entityManager.persist(departmentDto);
             entityTransaction.commit();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
         return true;
@@ -179,7 +164,7 @@ public class AdminRepoImpl implements  AdminRepo {
     }
 
     @Override
-    public void allocateDepartment(Long complaintId, Long departmentId,String status) {
+    public void allocateDepartment(Long complaintId, Long departmentId, String status) {
         System.out.println("Running allocateDepartment method in AdminRepoImpl...");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -245,44 +230,70 @@ public class AdminRepoImpl implements  AdminRepo {
 
     @Override
     public DepartmentAdminDto findByEmailId(String email) {
-        System.out.println("Running findByEmailId method...");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        System.out.println("Running findByEmailId method... ");
+        EntityManager entityManager =entityManagerFactory.createEntityManager();
         try {
-            Query query = entityManager.createQuery("Select s from DepartmentAdminDto s where s.departmentAdminEmailId = :emailId");
-            query.setParameter("emailId", email);
-            return (DepartmentAdminDto) query.getSingleResult();
-        } catch (NoResultException e) {
-            // Handle case where no result is found
-            return null;
-        } catch (PersistenceException e) {
+            Query query =entityManager.createQuery("Select s from DepartmentAdminDto s where s.departmentAdminEmailId=:email");
+            query.setParameter("email",email);
+            DepartmentAdminDto departmentAdminDto= (DepartmentAdminDto) query.getSingleResult();
+            return departmentAdminDto;
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             entityManager.close();
         }
         return null;
+    }
+    @Override
+    public DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password) {
+        System.out.println("Running findByEmailIdAndPassword method... ");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createQuery("SELECT s FROM DepartmentAdminDto s WHERE s.departmentAdminEmailId = :emailId AND s.departmentAdminPassword = :password");
+            query.setParameter("emailId", emailId);
+            query.setParameter("password", password);
+            DepartmentAdminDto departmentAdminDto = (DepartmentAdminDto) query.getSingleResult();
+            return departmentAdminDto;
+        } catch (NoResultException e) {
+            System.out.println("No result found for email: " + emailId + " with the given password.");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
-    public DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password) {
-        System.out.println("Running findByEmailIdAndPassword method...");
+    public boolean updateDepartmentAdminDetails(DepartmentAdminDto departmentAdminDto) {
+        System.out.println("Running updateDepartmentAdminPassword method AdminRepoImpl...");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
-            Query query = entityManager.createQuery("Select s from DepartmentAdminDto s where s.departmentAdminEmailId = :emailId and s.departmentAdminPassword = :password");
-            query.setParameter("emailId", emailId);
-            query.setParameter("password", password);
-            return (DepartmentAdminDto) query.getSingleResult();
-        } catch (NoResultException e) {
-            // Handle case where no result is found
-            return null;
-        } catch (PersistenceException e) {
+            transaction.begin();
+            entityManager.merge(departmentAdminDto);
+            transaction.commit();
+            return true;
+        }
+        catch (PersistenceException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
-        } finally {
+            return false;
+        }
+        finally {
             entityManager.close();
         }
-        return null;
     }
-
-
 }
+
+
+
+
 
 

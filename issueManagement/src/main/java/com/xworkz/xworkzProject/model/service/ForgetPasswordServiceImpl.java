@@ -40,7 +40,7 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
         {
             //Generating Random password and sending it...
             String newPassword = generatePassword();
-           // signupDto.setPassword(encoder.encode(newPassword));
+            // signupDto.setPassword(encoder.encode(newPassword));
             forgetPasswordRepo.updatePassword(emailId,encoder.encode(newPassword));
             signupDto.setPassword(newPassword);
             //sendPassword(signupDto);

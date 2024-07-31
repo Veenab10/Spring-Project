@@ -39,4 +39,6 @@ public interface AdminRepo {
 
     DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password);
 
+    boolean updateDepartmentAdminDetails(DepartmentAdminDto departmentAdminDto);
+
 }

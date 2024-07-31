@@ -35,6 +35,14 @@ public interface AdminService {
 
     DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password);
 
+    void incrementFailedAttempts(String email);
 
+    int getFailedAttempts(String email);
+
+    void resetFailedAttempts(String email);
+
+    void lockAccount(String email);
+
+    void unlockAccount(String email);
 
 }

@@ -151,17 +151,17 @@ public class AdminServiceImpl implements AdminService {
     public boolean saveDepartmentAdmin(DepartmentAdminDto departmentAdminDto) {
         System.out.println("Running saveDepartmentAdmin in AdminService...");
 
-        String password = generatePassword(); // Generate a password
-        String encodedPassword = passwordEncoder.encode(password); // Encode password
-
-        departmentAdminDto.setDepartmentAdminPassword(encodedPassword); // Set encoded password
+        String password=generatePassword();
+        departmentAdminDto.setDepartmentAdminPassword(passwordEncoder.encode(password)); // Set encoded password
 
         boolean savedDepartmentAdmin = adminRepo.saveDepartmentAdmin(departmentAdminDto);
 
         if (savedDepartmentAdmin) {
             System.out.println("Department Admin details saved successfully......" + departmentAdminDto);
+            departmentAdminDto.setDepartmentAdminPassword(password);
             mailSending.sendDepartmentPassword(departmentAdminDto); // Send plain password
             return true;
+
         }
         System.out.println("Department Admin details not saved ......");
         return false;
@@ -173,7 +173,7 @@ public class AdminServiceImpl implements AdminService {
         DepartmentAdminDto departmentAdminDto = this.adminRepo.findByEmailId(emailId);
         System.out.println("Service: data retrieved" + departmentAdminDto);
 
-        if (departmentAdminDto != null && passwordEncoder.matches(password, departmentAdminDto.getDepartmentAdminPassword())) {
+        if (departmentAdminDto != null && passwordEncoder.matches(password, departmentAdminDto.getDepartmentAdminPassword()) && !departmentAdminDto.isAccountLocked()) {
             departmentAdminDto.setDepartmentAdminPassword(null); // Clear the password for security
             return departmentAdminDto;
         }
@@ -182,5 +182,91 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
+    @Override
+    public void incrementFailedAttempts(String email) {
+        DepartmentAdminDto departmentAdminDto = adminRepo.findByEmailId(email);
+        if (departmentAdminDto != null) {
+            int attempts = departmentAdminDto.getFailedAttempts() + 1;
+            departmentAdminDto.setFailedAttempts(attempts);
+            if (attempts >= 3) {
+                departmentAdminDto.setAccountLocked(true);
+            }
+            adminRepo.updateDepartmentAdminDetails(departmentAdminDto); // Ensure you update the changes
+        }
+    }
+
+    @Override
+    public int getFailedAttempts(String email) {
+        DepartmentAdminDto departmentAdminDto = adminRepo.findByEmailId(email);
+        if (departmentAdminDto != null) {
+            return departmentAdminDto.getFailedAttempts();
+        } else {
+            return 0;
+        }
+    }
+
+
+
+    @Override
+    public void resetFailedAttempts(String email) {
+        DepartmentAdminDto departmentAdminDto = adminRepo.findByEmailId(email);
+        if (departmentAdminDto != null) {
+            departmentAdminDto.setFailedAttempts(0);
+            adminRepo.updateDepartmentAdminDetails(departmentAdminDto);
+        }
+    }
+    @Override
+    public void lockAccount(String email) {
+        DepartmentAdminDto departmentAdminDto=adminRepo.findByEmailId(email);
+        if(departmentAdminDto != null)
+        {
+            departmentAdminDto.setAccountLocked(true);
+            adminRepo.updateDepartmentAdminDetails(departmentAdminDto);
+        }
+
+    }
+
+    @Override
+    public void unlockAccount(String email) {
+        DepartmentAdminDto departmentAdminDto = adminRepo.findByEmailId(email);
+        if (departmentAdminDto != null) {
+            departmentAdminDto.setAccountLocked(false);
+            adminRepo.updateDepartmentAdminDetails(departmentAdminDto);
+        }
+
+    }
 
 }
+
+//    @Override
+//    public boolean forgotPassword(String emailId) {
+//        System.out.println("Running forgotPassword in ForgetPasswordServiceImpl.. ");
+//        SignupDto signupDto=forgetPasswordRepo.findByEmailId(emailId);
+//        if(signupDto!=null)
+//        {
+//            //Generating Random password and sending it...
+//            String newPassword = generatePassword();
+//            // signupDto.setPassword(encoder.encode(newPassword));
+//            forgetPasswordRepo.updatePassword(emailId,encoder.encode(newPassword));
+//            signupDto.setPassword(newPassword);
+//            //sendPassword(signupDto);
+//            mailSending.forgotPassword(signupDto);
+//
+//            //Reset failed attempts
+//            accountLockService.resetFailedAttempts(emailId);
+//            accountLockService.unlockAccount(emailId);
+//            System.out.println("(service)Data is existing "+signupDto);
+//
+//            return true;
+//
+//        }
+//        else
+//        {
+//            System.out.println("(service) Data is not existing"+signupDto);
+//        }
+//        return false;
+//    }
+
+
+
+

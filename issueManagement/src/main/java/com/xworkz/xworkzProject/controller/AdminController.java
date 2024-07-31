@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -179,22 +182,54 @@ public class AdminController {
         return "DepartmentAdmin";
     }
 
-    @PostMapping("/departmentAdmin-signIn")
-    public String signInDepartmentAdmin(DepartmentAdminDto departmentAdminDto,Model model)
-    {
-        //System.out.println("departPartAdmin"+departmentAdminDto);
-        System.out.println("Running signInDepartmentAdmin method in AdminController...");
-        DepartmentAdminDto adminDto=adminService.findByEmailIdAndPassword(departmentAdminDto.getDepartmentAdminEmailId(),departmentAdminDto.getDepartmentAdminPassword());
-        if(adminDto!=null)
-        {
-            model.addAttribute("signInsuccess","Successfully logined"+departmentAdminDto);
+//    @PostMapping("/departmentAdmin-signIn")
+//    public String signInDepartmentAdmin(DepartmentAdminDto departmentAdminDto,Model model)
+//    {
+//        //System.out.println("departPartAdmin"+departmentAdminDto);
+//        System.out.println("Running signInDepartmentAdmin method in AdminController...");
+//        DepartmentAdminDto adminDto=adminService.findByEmailIdAndPassword(departmentAdminDto.getDepartmentAdminEmailId(),departmentAdminDto.getDepartmentAdminPassword());
+//        if(adminDto!=null )
+//        {
+//            model.addAttribute("signInsuccess","Successfully logined");
+//            return "DepartmentAdminSignIn";
+//        }
+//        model.addAttribute("signInFailed","login failed");
+//        return "DepartmentAdminSignIn";
+//    }
+//
+
+
+
+@PostMapping("/departmentAdmin-signIn")
+public String signInSubmit(DepartmentAdminDto departmentAdminDto,Model model) {
+       System.out.println("Running signInDepartmentAdmin method in AdminController...");
+    DepartmentAdminDto adminDto=adminService.findByEmailIdAndPassword(departmentAdminDto.getDepartmentAdminEmailId(),departmentAdminDto.getDepartmentAdminPassword());
+    System.out.println("after recive the dto from service"+adminDto);
+    if (adminDto != null && !adminDto.isAccountLocked()) {
+        adminService.resetFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
+        model.addAttribute("Loginresult", "Login Succcessfully with," + departmentAdminDto.getDepartmentAdminEmailId());
+        System.out.println("(Controller) data are exists" + departmentAdminDto);
+
+        return "DepartmentAdminSignIn";
+
+    }
+    else {
+        adminService.incrementFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
+        int failedAttempts = adminService.getFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
+        System.out.println("Failed attempts for " + departmentAdminDto.getDepartmentAdminEmailId() + ": " + failedAttempts);
+        if (failedAttempts >= 3) {
+            adminService.lockAccount(departmentAdminDto.getDepartmentAdminEmailId()); // Lock account after 3 failed attempts
+            model.addAttribute("error", "Your account is locked due to too many failed attempts.");
+            model.addAttribute("accountLocked", true);
+            return "DepartmentAdminSignIn";
+        } else {
+            model.addAttribute("failed", "Invalid email id and password. Attempts: " + failedAttempts);
+            model.addAttribute("accountLocked", false);
+            System.out.println("(Controller) data are not exists" + departmentAdminDto);
             return "DepartmentAdminSignIn";
         }
-        model.addAttribute("signInFailed","login failed"+departmentAdminDto);
-        return "DepartmentAdminSignIn";
     }
-
-
+}
 }
 
 
