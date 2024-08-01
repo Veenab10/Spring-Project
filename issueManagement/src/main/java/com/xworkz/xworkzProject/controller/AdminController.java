@@ -209,7 +209,7 @@ public class AdminController {
             model.addAttribute("Loginresult", "Login Succcessfully with," + departmentAdminDto.getDepartmentAdminEmailId());
             System.out.println("(Controller) data are exists" + departmentAdminDto);
 
-            return "DepartmentAdminSignIn";
+            return "DepartmentAdminProfile";
 
         } else {
             adminService.incrementFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());

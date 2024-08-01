@@ -327,11 +327,12 @@ public class AdminServiceImpl implements AdminService {
             return false;
         }
 
-        // Step 2: Retrieve SignupDto based on emailId
+        // Step 2: Retrieve departmentAdminDto based on emailId
         DepartmentAdminDto departmentAdminDto = this.adminRepo.findByEmailId(email);
         if (departmentAdminDto == null) {
             System.out.println("User with email " + email + " not found.");
-            return false; // User not found
+            return false;
+            // User not found
         }
 
         String storedPassword = departmentAdminDto.getDepartmentAdminPassword();

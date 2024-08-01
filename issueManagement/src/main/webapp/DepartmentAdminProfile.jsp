@@ -23,9 +23,9 @@
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="view-user-details">Users Profile </a></li>
-                        <li><a class="dropdown-item" href="view-user-complaints">Users Complaints</a></li>
-                        <li><a class="dropdown-item" href="AddDepartment.jsp">AddDepartment</a></li>
-                         <li><a class="dropdown-item" href="DepartmentAdmin.jsp">AddDepartmentAdmin</a></li>
+                        <li><a class="dropdown-item" href="view-user-complaints">View Complaints</a></li>
+                        <li><a class="dropdown-item" href="AddDepartment.jsp">AddEmployees</a></li>
+                         <li><a class="dropdown-item" href="DepartmentAdminResetPassword.jsp">ResetPassword</a></li>
 
 
                     </ul>
@@ -33,8 +33,7 @@
     </nav>
 
 <div class="container">
-    <h2>Welcome to the Admin Profile</h2>
-    <strong style="color:green;">${Loginresult}</strong>
+
 
 </div>
 
