@@ -48,4 +48,9 @@ public interface AdminService {
     boolean adminForgotPassword(String email);
 
     boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword);
+
+    //to view department name list in the Department admin Registration JSP
+    //void viewDepartmentList( Long departmentId,Long departmentAdminId);
+
+    DepartmentDto searchByDepartmentName(String departmentName);
 }

@@ -227,6 +227,71 @@ public class AdminRepoImpl implements  AdminRepo {
         }
     }
 
+//    @Override
+//    public void viewDepartmentList(Long departmentId, Long departmentAdminId) {
+//        System.out.println("Running viewDepartmentList method in AdminServiceImpl...");
+//
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        EntityTransaction entityTransaction = entityManager.getTransaction();
+//
+//        try {
+//            entityTransaction.begin();
+//
+//            // Find the DepartmentAdmin entity
+//            DepartmentAdminDto departmentAdmin = entityManager.find(DepartmentAdminDto.class, departmentAdminId);
+//            if (departmentAdmin == null) {
+//                throw new RuntimeException("DepartmentAdmin not found for ID: " + departmentAdminId);
+//            }
+//            System.out.println("Found DepartmentAdmin: " + departmentAdminId);
+//
+//            // Find the Department entity
+//            DepartmentDto department = entityManager.find(DepartmentDto.class, departmentId);
+//            if (department == null) {
+//                throw new RuntimeException("Department not found for ID: " + departmentId);
+//            }
+//            System.out.println("Found Department: " + department);
+//
+//            // Set the department for the DepartmentAdmin
+//            departmentAdmin.setDepartment(department);
+//
+//            // Merge the updated DepartmentAdmin
+//            entityManager.merge(departmentAdmin);
+//            System.out.println("Updated DepartmentAdmin after merge: " + departmentAdmin);
+//
+//            entityTransaction.commit();
+//            System.out.println("Department allocated successfully.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            if (entityTransaction.isActive()) {
+//                entityTransaction.rollback();
+//            }
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+
+    @Override
+    public DepartmentDto searchByDepartmentName(String departmentName) {
+        System.out.println("Running searchByDepartmentType method in AdminRepoImpl... ");
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        try {
+            String query = "Select d from  DepartmentDto d where d.departmentName=:departmentName";
+            Query result = entityManager.createQuery(query);
+            result.setParameter("departmentName", departmentName);
+            DepartmentDto departmentDto = (DepartmentDto) result.getSingleResult();
+            return departmentDto;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            entityManager.close();
+        }
+
+        return null;
+    }
+
 
     @Override
     public DepartmentAdminDto findByEmailId(String email) {
@@ -268,6 +333,7 @@ public class AdminRepoImpl implements  AdminRepo {
         }
     }
 
+
     @Override
     public boolean updateDepartmentAdminDetails(DepartmentAdminDto departmentAdminDto) {
         System.out.println("Running updateDepartmentAdminPassword method AdminRepoImpl...");
@@ -290,6 +356,9 @@ public class AdminRepoImpl implements  AdminRepo {
             entityManager.close();
         }
     }
+
+
+
 }
 
 

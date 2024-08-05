@@ -141,10 +141,10 @@ public class AdminController {
     public String saveDepartment(DepartmentDto departmentDto, Model model) {
         System.out.println("Running saveDepartment method in admin controller...");
         boolean saveDepartment = adminService.saveDepartment(departmentDto);
+
         if (saveDepartment) {
             System.out.println("saveDepartment successfully");
-            //model.addAttribute("savedsuccess", "save Department successfully");
-            //return "AdminProfile";
+
             return "redirect:/department-profile";
 
         }
@@ -164,40 +164,62 @@ public class AdminController {
         model.addAttribute("savedsuccess", "save Department successfully");
         return "AdminProfile";
     }
+    @GetMapping("/adddeptadmin")
+    public String getform(Model model){
+        List<DepartmentDto> departments = adminService.getAllDepartments();
+        model.addAttribute("departments",departments);
+        return "DepartmentAdmin";
+    }
+
 
     @PostMapping("/save-departmentadmin")
-    public String saveDepartmentAdminDetails(DepartmentAdminDto departmentAdminDto, Model model) {
+    public String saveDepartmentAdminDetails(DepartmentDto departmentDto,DepartmentAdminDto departmentAdminDto, Model model) {
         System.out.println("Running saveDepartmentAdmin in admin controller....");
-
+        DepartmentDto resultDto =adminService.searchByDepartmentName(departmentAdminDto.getDepartmentType());
+        DepartmentDto  id= new DepartmentDto();
+        departmentAdminDto.setDepartment(resultDto);
 
         boolean saved = adminService.saveDepartmentAdmin(departmentAdminDto);
         if (saved) {
             System.out.println("department admin details saved successfully...." + saved + ":  DepartmentAdminDto  :" + departmentAdminDto);
             model.addAttribute("departmentadminsuccess", "DepartmentAdminDetails saved successfullyy.....");
+            System.out.println(departmentAdminDto.getDepartment());
             return "DepartmentAdmin";
-        } else {
+        }
+        else {
             System.out.println("department admin details is not saved ....");
             model.addAttribute("departmentadminfailed", "DepartmentAdminDetails not saved.....");
         }
         return "DepartmentAdmin";
     }
 
-//    @PostMapping("/departmentAdmin-signIn")
-//    public String signInDepartmentAdmin(DepartmentAdminDto departmentAdminDto,Model model)
-//    {
-//        //System.out.println("departPartAdmin"+departmentAdminDto);
-//        System.out.println("Running signInDepartmentAdmin method in AdminController...");
-//        DepartmentAdminDto adminDto=adminService.findByEmailIdAndPassword(departmentAdminDto.getDepartmentAdminEmailId(),departmentAdminDto.getDepartmentAdminPassword());
-//        if(adminDto!=null )
-//        {
-//            model.addAttribute("signInsuccess","Successfully logined");
-//            return "DepartmentAdminSignIn";
-//        }
-//        model.addAttribute("signInFailed","login failed");
-//        return "DepartmentAdminSignIn";
-//    }
-//
 
+
+
+//    @PostMapping("/department-view-list")
+//    public String viewDepartmentList(
+//            @RequestParam("departmentId") Long departmentId,
+//            @RequestParam("departmentAdminId") Long departmentAdminId,
+//            Model model
+//    ) {
+//        try {
+//            System.out.println("Running allocate department");
+//
+//            // Call the service method to allocate department
+//            adminService.viewDepartmentList(departmentAdminId, departmentId);
+//            System.out.println("departmentAdminId" + departmentAdminId);
+//            System.out.println("departmentId" + departmentId);
+//            model.addAttribute("successMessage", "Department allocated successfully!");
+//        } catch (Exception e) {
+//            model.addAttribute("errorMessage", "Failed to allocate department. Please try again.");
+//            e.printStackTrace();
+//        }
+//        // Reload departments to be displayed
+//        List<DepartmentDto> departments = adminService.getAllDepartments();
+//        model.addAttribute("departments", departments);
+//        return "DepartmentAdmin";
+//
+//    }
 
     @PostMapping("/departmentAdmin-signIn")
     public String signInSubmit(DepartmentAdminDto departmentAdminDto, Model model) {
@@ -259,7 +281,7 @@ public class AdminController {
 
         return "DepartmentAdminResetPassword";
     }
-    }
+}
 
 
 

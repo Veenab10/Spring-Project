@@ -111,6 +111,23 @@ public class DepartmentAdminDto {
         this.failedAttempts = failedAttempts;
     }
 
+
+//    @ManyToMany
+//    @JoinColumn(name = "department_id")
+//    private Long department;
+
+    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id") // Adjust as per your schema
+    private DepartmentDto department;
+
+    public DepartmentDto getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentDto department) {
+        this.department = department;
+    }
+
     @Override
     public String toString() {
         return "DepartmentAdminDto{" +
@@ -123,6 +140,7 @@ public class DepartmentAdminDto {
                 ", departmentAdminPassword='" + departmentAdminPassword + '\'' +
                 ", accountLocked=" + accountLocked +
                 ", failedAttempts=" + failedAttempts +
+                ", department=" + department +
                 '}';
     }
 }

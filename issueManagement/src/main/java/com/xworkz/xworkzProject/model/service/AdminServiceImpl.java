@@ -138,6 +138,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public List<DepartmentDto> getAllDepartments() {
+
         return adminRepo.getAllDepartments(); // Retrieve all departments
     }
 
@@ -167,6 +168,13 @@ public class AdminServiceImpl implements AdminService {
         System.out.println("Department Admin details not saved ......");
         return false;
     }
+
+//    @Override
+//    public void viewDepartmentList( Long departmentId,Long departmentAdminId) {
+//        System.out.println("Running  viewDepartmentList method in adminserviceimpl...");
+//        // Delegate the department allocation to the repository
+//        adminRepo.viewDepartmentList(departmentId,departmentAdminId);
+//    }
 
     @Override
     public DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password) {
@@ -367,6 +375,19 @@ public class AdminServiceImpl implements AdminService {
         return false; // Password update failed
     }
 
+    @Override
+    public DepartmentDto searchByDepartmentName(String departmentName) {
+        System.out.println("Running searchByDepartmentName method in AdminServiceImpl... ");
+        DepartmentDto departmentDto=adminRepo.searchByDepartmentName(departmentName);
+        if(departmentDto!=null)
+        {
+            System.out.println("FindBy Department Name successfully"+departmentName);
+            return departmentDto;
+        }
+
+        System.out.println("FindBy Department Name successfully"+departmentName);
+        return null;
+    }
 
 
 }

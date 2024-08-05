@@ -25,7 +25,7 @@
                         <li><a class="dropdown-item" href="view-user-details">Users Profile </a></li>
                         <li><a class="dropdown-item" href="view-user-complaints">Users Complaints</a></li>
                         <li><a class="dropdown-item" href="AddDepartment.jsp">AddDepartment</a></li>
-                         <li><a class="dropdown-item" href="DepartmentAdmin.jsp">AddDepartmentAdmin</a></li>
+                         <li><a class="dropdown-item" href="adddeptadmin">AddDepartmentAdmin</a></li>
 
 
                     </ul>

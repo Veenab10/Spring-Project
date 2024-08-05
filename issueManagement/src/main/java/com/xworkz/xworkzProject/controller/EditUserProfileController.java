@@ -32,6 +32,7 @@ public class EditUserProfileController {
 
     @GetMapping("/edit-profile")
     public String showUserDetails(Model model) {
+
         String userEmail = (String) httpSession.getAttribute("signedInUserEmail");
         System.out.println("Signed-in user email: " + userEmail);
 

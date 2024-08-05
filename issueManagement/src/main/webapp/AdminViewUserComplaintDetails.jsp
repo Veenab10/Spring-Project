@@ -97,7 +97,6 @@
                             <td >
                             <div style="width:110px;">
 
-                             <input type="hidden" name="complaintId" value="${complaint.complaintId}" id="complaintId">
                             <select class="form-select" name="status" id="status">
                             <option selected >${complaint.status}</option>
                             <option value="Pending">Pending</option>

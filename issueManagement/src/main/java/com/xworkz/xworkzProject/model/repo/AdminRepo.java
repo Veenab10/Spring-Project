@@ -41,4 +41,11 @@ public interface AdminRepo {
 
     boolean updateDepartmentAdminDetails(DepartmentAdminDto departmentAdminDto);
 
+    //to view department name list in the Department admin Registration JSP
+   // void viewDepartmentList(Long departmentId,Long departmentAdminId);
+
+    DepartmentDto searchByDepartmentName(String departmentName);
+
+
+
 }
