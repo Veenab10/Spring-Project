@@ -33,7 +33,7 @@
 
                                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                                 <li><a class="dropdown-item" href="AdminSignIn.jsp">Admin SignIn </a></li>
-                                                <li><a class="dropdown-item" href="DepartmentAdminSignIn.jsp">Department Admin SignIn</a></li>
+                                                <li><a class="dropdown-item" href="signIn-dept-admin">Department Admin SignIn</a></li>
                                             </ul>
 
     </div>

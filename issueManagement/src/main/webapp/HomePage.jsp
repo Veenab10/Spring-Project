@@ -16,7 +16,7 @@
             <div class="container-fluid">
             <div class="navbar-header">
             <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
-             <a class="navbar-brand" style="color:white;" href="RaiseComplaint.jsp">RaiseComplaint</a>
+             <a class="navbar-brand" style="color:white;" href="add-complaint">RaiseComplaint</a>
              <a class="navbar-brand" style="color:white;" href="view-complaint">view-complaint</a>
 
 

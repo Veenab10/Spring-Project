@@ -37,7 +37,7 @@ public interface AdminRepo {
 
     DepartmentAdminDto findByEmailId(String email);
 
-    DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password);
+    DepartmentAdminDto findByEmailPasswordAndDepartmentType(String emailId, String password,String departmentType);
 
     boolean updateDepartmentAdminDetails(DepartmentAdminDto departmentAdminDto);
 
@@ -45,6 +45,9 @@ public interface AdminRepo {
    // void viewDepartmentList(Long departmentId,Long departmentAdminId);
 
     DepartmentDto searchByDepartmentName(String departmentName);
+
+    //findByUserDepartmentAdminId for admin view
+     List<RaiseComplaintDto> findByUSerComplaintType(String complaintType);
 
 
 

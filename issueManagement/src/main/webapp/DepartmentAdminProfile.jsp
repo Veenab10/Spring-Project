@@ -23,7 +23,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="view-user-details">Users Profile </a></li>
-                        <li><a class="dropdown-item" href="view-user-complaints">View Complaints</a></li>
+                        <li><a class="dropdown-item" href="departmentAdmin-view-user-complaints">View User Complaints</a></li>
                         <li><a class="dropdown-item" href="AddDepartment.jsp">AddEmployees</a></li>
                          <li><a class="dropdown-item" href="DepartmentAdminResetPassword.jsp">ResetPassword</a></li>
 

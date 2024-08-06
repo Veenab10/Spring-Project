@@ -1,5 +1,6 @@
 package com.xworkz.xworkzProject.model.service;
 
+import com.xworkz.xworkzProject.dto.DepartmentDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.repo.RaiseComplaintRepo;
@@ -20,6 +21,25 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService {
     public RaiseComplaintServiceImpl() {
         System.out.println("Created RaiseComplaintServiceImpl");
 
+    }
+
+    public List<DepartmentDto> getAllDepartments() {
+
+        return raiseComplaintRepo.getAllDepartments(); // Retrieve all departments
+    }
+
+    @Override
+    public DepartmentDto searchByDepartmentName(String departmentName) {
+        System.out.println("Running searchByDepartmentName method in AdminServiceImpl... ");
+        DepartmentDto departmentDto=raiseComplaintRepo.searchByDepartmentName(departmentName);
+        if(departmentDto!=null)
+        {
+            System.out.println("FindBy Department Name successfully"+departmentName);
+            return departmentDto;
+        }
+
+        System.out.println("FindBy Department Name successfully"+departmentName);
+        return null;
     }
 
 
@@ -84,6 +104,9 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService {
         }
 
     }
+
+
+
 }
 
 

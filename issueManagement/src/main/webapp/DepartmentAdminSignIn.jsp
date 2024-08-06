@@ -29,6 +29,8 @@
 
 <form action="departmentAdmin-signIn" method="post">
 
+
+
     <div class="d-flex justify-content-center mt-3 mb-3 align-items-center vh-5">
         <div class="card" style="width: 30rem;">
             <div class="card-body">
@@ -36,6 +38,15 @@
                 <strong style="color:green"/>${Loginresult}</strong>
                 <strong style="color:red"/>${error}</strong>
                 <strong style="color:red;/">${failed}</strong>
+
+                <div class="form-group p-3">
+                      <label for="departmentType">Select Department</label>
+                                    <select class="form-select" name="departmentType" id="departmentType">
+                                        <c:forEach var="department" items="${departments}">
+                                            <option value="${department.departmentName}">${department.departmentName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
 
 
                 <div class="form-group p-3">

@@ -1,5 +1,6 @@
 package com.xworkz.xworkzProject.model.service;
 
+import com.xworkz.xworkzProject.dto.DepartmentDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RaiseComplaintService {
+
+    List<DepartmentDto> getAllDepartments();
+
+    DepartmentDto searchByDepartmentName(String departmentName);
 
     boolean saveRaiseComplaintType(RaiseComplaintDto raiseComplaintDto);
 

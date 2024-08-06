@@ -177,12 +177,12 @@ public class AdminServiceImpl implements AdminService {
 //    }
 
     @Override
-    public DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password) {
+    public DepartmentAdminDto findByEmailPasswordAndDepartmentType(String emailId, String password,String departmentType) {
         System.out.println("Service: findByEmailIdAndPassword method...");
         DepartmentAdminDto departmentAdminDto = this.adminRepo.findByEmailId(emailId);
         System.out.println("Service: data retrieved" + departmentAdminDto);
 
-        if (departmentAdminDto != null && passwordEncoder.matches(password, departmentAdminDto.getDepartmentAdminPassword()) && !departmentAdminDto.isAccountLocked()) {
+        if (departmentAdminDto != null && passwordEncoder.matches(password, departmentAdminDto.getDepartmentAdminPassword()) && !departmentAdminDto.isAccountLocked() && departmentAdminDto.getDepartmentType().equals(departmentType)) {
             departmentAdminDto.setDepartmentAdminPassword(null); // Clear the password for security
             return departmentAdminDto;
         }
@@ -387,6 +387,37 @@ public class AdminServiceImpl implements AdminService {
 
         System.out.println("FindBy Department Name successfully"+departmentName);
         return null;
+    }
+
+
+//    @Override
+//    public List<DepartmentAdminDto> findByUserDepartmentAdminId() {
+//
+//        System.out.println("findByUserDepartmentAdminId method in AdminServiceImpl..");
+//        List<DepartmentAdminDto> dtoData = adminRepo.findByUserDepartmentAdminId();
+//        if (dtoData != null) {
+//            System.out.println("findById data successful in AdminServiceImpl..");
+//            return dtoData;
+//        } else {
+//            System.out.println("findById data not successful in AdminServiceImpl..");
+//        }
+//
+//        return Collections.emptyList();
+//    }
+
+    @Override
+    public List<RaiseComplaintDto> findByUSerComplaintType(String complaintType) {
+
+        System.out.println("findById method in AdminServiceImpl..");
+        List<RaiseComplaintDto> dtoData = adminRepo.findByUSerComplaintType(complaintType);
+        if (dtoData != null) {
+            System.out.println("findByComplaintType data successful in AdminServiceImpl..");
+            return dtoData;
+        } else {
+            System.out.println("findByComplaintType data not successful in AdminServiceImpl..");
+        }
+
+        return Collections.emptyList();
     }
 
 

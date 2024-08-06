@@ -313,17 +313,18 @@ public class AdminRepoImpl implements  AdminRepo {
         return null;
     }
     @Override
-    public DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password) {
+    public DepartmentAdminDto findByEmailPasswordAndDepartmentType(String emailId, String password,String departmentType) {
         System.out.println("Running findByEmailIdAndPassword method... ");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            Query query = entityManager.createQuery("SELECT s FROM DepartmentAdminDto s WHERE s.departmentAdminEmailId = :emailId AND s.departmentAdminPassword = :password");
+            Query query = entityManager.createQuery("SELECT s FROM DepartmentAdminDto s WHERE s.departmentAdminEmailId = :emailId AND s.departmentAdminPassword = :password And s.departmentType=:departmentType");
             query.setParameter("emailId", emailId);
             query.setParameter("password", password);
+            query.setParameter("departmentType",departmentType);
             DepartmentAdminDto departmentAdminDto = (DepartmentAdminDto) query.getSingleResult();
             return departmentAdminDto;
         } catch (NoResultException e) {
-            System.out.println("No result found for email: " + emailId + " with the given password.");
+            System.out.println("No result found for email: " + emailId + " with the given password" + "given departmentType:"+departmentType);
             return null;
         } catch (Exception e) {
             e.printStackTrace();
@@ -356,6 +357,31 @@ public class AdminRepoImpl implements  AdminRepo {
             entityManager.close();
         }
     }
+
+    //to view particulart department complaints by department admin
+
+    @Override
+    public List<RaiseComplaintDto> findByUSerComplaintType(String complaintType) {
+        System.out.println("findById method in AdminRepoImpl...");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            String query = "SELECT r FROM RaiseComplaintDto r where r.complaintType=:complaintType";
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("complaintType",complaintType);
+            List<RaiseComplaintDto> data = query1.getResultList();
+            System.out.println("Data size:" + data.size()); // Print the number of records fetched
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            entityManager.close();
+        }
+
+        return Collections.emptyList();
+    }
+
+
 
 
 

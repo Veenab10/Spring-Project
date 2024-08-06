@@ -46,19 +46,14 @@
                   <strong style="color:green"/>${raiseComplaintSucess}</strong>
                   <strong style="color:red"/>${ErrorRaiseComplaintSucess}</strong>
 
-                   <div class="row mb-3">
-                         <span id="countryNameError"></span>
-                         <label for="countryName" class="form-label">Complaint Type:</label>
-                         <select class="form-select custom-select-width" id="complaintType" name="complaintType"  placeholder="Complaint Type">
-                               <option ${dto.complaintType==null ? 'selected' : ''}  selected value=" "></option>
-                               <option value="Water Supply" ${dto.complaintType eq 'Water Supply' ? 'selected' : ''}>Water Supply</option>
-                               <option value="System Problem"  ${dto.complaintType eq 'System Problem' ? 'selected' : ''}>System Problem</option>
-                               <option value="Network Problem"  ${dto.complaintType eq 'Network Problem' ? 'selected' : ''}>Network Problem</option>
-                               <option value="Electrical Problem"  ${dto.complaintType eq 'Electrical Problem' ? 'selected' : ''}>Electrical Problem</option>
-                               <option value="Noise Problem"  ${dto.complaintType eq 'GMIT' ? 'selected' : ''}>Noise Problem</option>
-                           </select>
-                           <span id="collegeNameError"></span>
-                       </div>
+                   <div class="form-group p-3">
+                                       <label for="departmentType">Select Complaint Type</label>
+                                       <select class="form-select" name="complaintType" id="complaintType">
+                                           <c:forEach var="department" items="${departments}">
+                                               <option value="${department.departmentName}">${department.departmentName}</option>
+                                           </c:forEach>
+                                       </select>
+                                   </div>
 
                        <!----Country ---!>
 

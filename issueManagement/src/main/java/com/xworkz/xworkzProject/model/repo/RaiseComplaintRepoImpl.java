@@ -1,10 +1,12 @@
 package com.xworkz.xworkzProject.model.repo;
 
+import com.xworkz.xworkzProject.dto.DepartmentDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,47 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
 
     public RaiseComplaintRepoImpl() {
         System.out.println("Created RaiseComplaintRepoImpl");
+    }
+
+
+    @Override
+    public List<DepartmentDto> getAllDepartments() {
+        System.out.println("Running getAllDepartments method in admin repo implementation...");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            String query = "SELECT d FROM DepartmentDto d";
+            Query query1 = entityManager.createQuery(query);
+            List<DepartmentDto> resultList = query1.getResultList();
+            System.out.println("ResultList size: " + resultList.size());
+            return resultList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public DepartmentDto searchByDepartmentName(String departmentName) {
+        System.out.println("Running searchByDepartmentType method in AdminRepoImpl... ");
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        try {
+            String query = "Select d from  DepartmentDto d where d.departmentName=:departmentName";
+            Query result = entityManager.createQuery(query);
+            result.setParameter("departmentName", departmentName);
+            DepartmentDto departmentDto = (DepartmentDto) result.getSingleResult();
+            return departmentDto;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            entityManager.close();
+        }
+
+        return null;
     }
 
     @Override

@@ -112,13 +112,13 @@ public class DepartmentAdminDto {
     }
 
 
-//    @ManyToMany
-//    @JoinColumn(name = "department_id")
-//    private Long department;
-
-    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
-    @JoinColumn(name = "department_id", referencedColumnName = "department_id") // Adjust as per your schema
+    @ManyToOne
+    @JoinColumn(name = "department_id")
     private DepartmentDto department;
+
+//    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
+//    @JoinColumn(name = "department_id", referencedColumnName = "department_id") // Adjust as per your schema
+//    private DepartmentDto department;
 
     public DepartmentDto getDepartment() {
         return department;

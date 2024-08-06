@@ -33,7 +33,7 @@ public interface AdminService {
     //from here im going to save department admin details
     boolean saveDepartmentAdmin(DepartmentAdminDto departmentAdminDto);
 
-    DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password);
+    DepartmentAdminDto findByEmailPasswordAndDepartmentType(String emailId, String password,String departmentType);
 
     void incrementFailedAttempts(String email);
 
@@ -53,4 +53,8 @@ public interface AdminService {
     //void viewDepartmentList( Long departmentId,Long departmentAdminId);
 
     DepartmentDto searchByDepartmentName(String departmentName);
+
+    //List<DepartmentAdminDto> findByUserDepartmentAdminId();
+
+    List<RaiseComplaintDto> findByUSerComplaintType(String complaintType);
 }

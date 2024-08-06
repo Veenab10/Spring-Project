@@ -1,5 +1,6 @@
 package com.xworkz.xworkzProject.controller;
 
+import com.xworkz.xworkzProject.dto.DepartmentDto;
 import com.xworkz.xworkzProject.dto.RaiseComplaintDto;
 import com.xworkz.xworkzProject.dto.SignupDto;
 import com.xworkz.xworkzProject.model.service.RaiseComplaintService;
@@ -27,6 +28,13 @@ public class RaiseComplaintController {
         System.out.println("Created RaiseComplaintController");
     }
 
+    @GetMapping("/add-complaint")
+    public String getform(Model model){
+        List<DepartmentDto> departments = raiseComplaintService.getAllDepartments();
+        model.addAttribute("departments",departments);
+        return "RaiseComplaint";
+    }
+
     @PostMapping("/raise-complaint")
     public String raiseComplaint( @ModelAttribute("signupDto")SignupDto signupDto,@ModelAttribute("raiseComplaintDto") RaiseComplaintDto raiseComplaintDto, Model model)
     {
@@ -35,10 +43,16 @@ public class RaiseComplaintController {
         int signedInUserId = signupDto.getId();
         System.out.println("Signed in user ID: " + signedInUserId);
 
+        DepartmentDto resultDto =raiseComplaintService.searchByDepartmentName(raiseComplaintDto.getComplaintType());
+        raiseComplaintDto.setDepartment(resultDto);
+
+
+
         // Set the signed in user ID in raiseComplaintDto
         SignupDto userDto = new SignupDto();
         userDto.setId(signedInUserId);
         raiseComplaintDto.setUserId(userDto);
+
 
         boolean save=raiseComplaintService.saveRaiseComplaintType(raiseComplaintDto);
 

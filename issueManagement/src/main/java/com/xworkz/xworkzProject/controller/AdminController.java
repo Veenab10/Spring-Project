@@ -176,7 +176,7 @@ public class AdminController {
     public String saveDepartmentAdminDetails(DepartmentDto departmentDto,DepartmentAdminDto departmentAdminDto, Model model) {
         System.out.println("Running saveDepartmentAdmin in admin controller....");
         DepartmentDto resultDto =adminService.searchByDepartmentName(departmentAdminDto.getDepartmentType());
-        DepartmentDto  id= new DepartmentDto();
+        //DepartmentDto  id= new DepartmentDto();
         departmentAdminDto.setDepartment(resultDto);
 
         boolean saved = adminService.saveDepartmentAdmin(departmentAdminDto);
@@ -221,19 +221,33 @@ public class AdminController {
 //
 //    }
 
+    @GetMapping("/signIn-dept-admin")
+    public String getdepartment(Model model){
+        List<DepartmentDto> departments = adminService.getAllDepartments();
+        model.addAttribute("departments",departments);
+        return "DepartmentAdminSignIn";
+    }
+
     @PostMapping("/departmentAdmin-signIn")
-    public String signInSubmit(DepartmentAdminDto departmentAdminDto, Model model) {
+    public String signInSubmit(DepartmentAdminDto departmentAdminDto, Model model,HttpServletRequest request) {
         System.out.println("Running signInDepartmentAdmin method in AdminController...");
-        DepartmentAdminDto adminDto = adminService.findByEmailIdAndPassword(departmentAdminDto.getDepartmentAdminEmailId(), departmentAdminDto.getDepartmentAdminPassword());
-        System.out.println("after recive the dto from service" + adminDto);
-        if (adminDto != null && !adminDto.isAccountLocked()) {
+        DepartmentAdminDto departmentAdminDto1 = adminService.findByEmailPasswordAndDepartmentType(departmentAdminDto.getDepartmentAdminEmailId(), departmentAdminDto.getDepartmentAdminPassword(),departmentAdminDto.getDepartmentType());
+        System.out.println("after recive the dto from service" + departmentAdminDto1);
+        if (departmentAdminDto1 != null && !departmentAdminDto1.isAccountLocked()) {
             adminService.resetFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
             model.addAttribute("Loginresult", "Login Succcessfully with," + departmentAdminDto.getDepartmentAdminEmailId());
             System.out.println("(Controller) data are exists" + departmentAdminDto);
 
+            //set the session for viewing the particular department raise complaint
+            HttpSession session= request.getSession();
+            //session.setAttribute("department",departmentAdminDto);
+            session.setAttribute("departmentAdmin",departmentAdminDto1.getDepartmentType());
+
+
             return "DepartmentAdminProfile";
 
-        } else {
+        }
+        else {
             adminService.incrementFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
             int failedAttempts = adminService.getFailedAttempts(departmentAdminDto.getDepartmentAdminEmailId());
             System.out.println("Failed attempts for " + departmentAdminDto.getDepartmentAdminEmailId() + ": " + failedAttempts);
@@ -243,7 +257,7 @@ public class AdminController {
                 model.addAttribute("accountLocked", true);
                 return "DepartmentAdminSignIn";
             } else {
-                model.addAttribute("failed", "Invalid email id and password. Attempts: " + failedAttempts);
+                model.addAttribute("failed", "Invalid email id, password and departmentType. Attempts: " + failedAttempts);
                 model.addAttribute("accountLocked", false);
                 System.out.println("(Controller) data are not exists" + departmentAdminDto);
                 return "DepartmentAdminSignIn";
@@ -278,10 +292,66 @@ public class AdminController {
         } else {
             model.addAttribute("passwordResetError", "Failed to reset password. Please check your password");
         }
-
         return "DepartmentAdminResetPassword";
     }
+
+    @GetMapping("departmentAdmin-view-user-complaints")
+    public String adminViewUserComplaintDetails(RaiseComplaintDto raiseComplaintDto, Model model,HttpServletRequest request) {
+        System.out.println("adminviewUserDetails method in AdminController..");
+        HttpSession session=request.getSession();
+        String departmentAdminDto =(String)session.getAttribute("departmentAdmin");
+        List<RaiseComplaintDto> viewDepartmentComplaints = adminService.findByUSerComplaintType(departmentAdminDto);
+        model.addAttribute("viewDepartmentComplaints", viewDepartmentComplaints);
+
+        return "DepartmentAdminViewUserComplaints";
+    }
+
+
+
+//    @GetMapping("departmentAdmin-view-user-complaints")
+//    public String adminViewUserComplaintDetails(RaiseComplaintDto raiseComplaintDto, Model model) {
+//        System.out.println("adminviewUserDetails method in AdminController..");
+//        List<RaiseComplaintDto> viewDepartmentComplaints = adminService.findByUSerComplaintType(raiseComplaintDto.getComplaintType());
+//
+//        if (!viewDepartmentComplaints.isEmpty()) {
+//            System.out.println("admin-view-user-details successful in AdminController..");
+//            model.addAttribute("viewDepartmentComplaints", viewDepartmentComplaints);
+//            //model.addAttribute("departments", departments);
+//            System.out.println(viewDepartmentComplaints);
+//            return "DepartmentAdminViewUserComplaints";
+//
+//
+//        } else {
+//            System.out.println("view-user-details not  successful in AdminController..");
+//            return "DepartmentAdminViewUserComplaints";
+//
+//        }
+//
+//    }
 }
+
+//@GetMapping("view-user-complaints")
+//public String viewUserComplaintDetails(RaiseComplaintDto raiseComplaintDto, Model model, DepartmentDto departmentDto) {
+//    System.out.println("viewUserDetails method in AdminController..");
+//    List<RaiseComplaintDto> viewRaiseComplaints = adminService.findByUSerComplaintId();
+//    List<DepartmentDto> departments = adminService.getAllDepartments(); // Retrieve department names
+//
+//
+//    if (!viewRaiseComplaints.isEmpty()) {
+//        System.out.println("view-user-details successful in AdminController..");
+//        model.addAttribute("viewRaiseComplaints", viewRaiseComplaints);
+//        model.addAttribute("departments", departments);
+//        System.out.println(viewRaiseComplaints);
+//        return "AdminViewUserComplaintDetails";
+//
+//
+//    } else {
+//        System.out.println("view-user-details not  successful in AdminController..");
+//        return "AdminViewUserComplaintDetails";
+//
+//    }
+//
+//}
 
 
 
