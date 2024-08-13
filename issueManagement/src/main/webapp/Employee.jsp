@@ -15,19 +15,19 @@
     </div>
 </nav>
 
-<form action="save-departmentadmin" method="post">
+<form action="save-employee-details" method="post">
     <div class="d-flex justify-content-center mt-3 mb-3 align-items-center vh-5">
         <div class="card" style="width: 30rem;">
             <div class="card-body">
-                <center><h5 class="card-title">Department Admin Form</h5></center>
+                <center><h5 class="card-title">Employee Form</h5></center>
                 <strong style="color:green"><c:out value="${departmentadminsuccess}"/></strong>
                 <strong style="color:red"><c:out value="${departmentadminfailed}"/></strong>
                 <strong style="color:red"><c:out value="${successMessage}"/></strong>
                 <strong style="color:red"><c:out value="${errorMessage}"/></strong>
 
                 <div class="form-group p-3">
-                    <label for="departmentAdminName">Department Admin Name</label>
-                    <input type="text" class="form-control" id="departmentAdminName" name="departmentAdminName" placeholder="Enter First Name" >
+                    <label for="departmentAdminName">Employee Name</label>
+                    <input type="text" class="form-control" id="employeeName" name="employeeName" placeholder="Enter Employee Name" >
                 </div>
 
                 <div class="form-group p-3">
@@ -40,18 +40,18 @@
                 </div>
 
                 <div class="form-group p-3">
-                    <label for="departmentAdminEmailId">Email ID</label>
-                    <input type="email" class="form-control" id="departmentAdminEmailId" name="departmentAdminEmailId" placeholder="Enter Email ID" >
+                    <label for="employeeEmail">Email ID</label>
+                    <input type="email" class="form-control" id="employeeEmail" name="employeeEmail" placeholder="Enter Email ID" >
                 </div>
 
                 <div class="form-group p-3">
-                    <label for="departmentAdminContactNumber">Contact Number</label>
-                    <input type="text" class="form-control" id="departmentAdminContactNumber" name="departmentAdminContactNumber" placeholder="Enter Contact Number" >
+                    <label for="employeeContactNumber">Contact Number</label>
+                    <input type="text" class="form-control" id="employeeContactNumber" name="employeeContactNumber" placeholder="Enter Contact Number" >
                 </div>
 
                 <div class="form-group p-3">
-                    <label for="departmentAdminAlternativeContactNumber">Alternative Contact Number</label>
-                    <input type="text" class="form-control" id="departmentAdminAlternativeContactNumber" name="departmentAdminAlternativeContactNumber" placeholder="Enter Alternative Contact Number" >
+                    <label for="employeeAlternativeNumber">Alternative Contact Number</label>
+                    <input type="text" class="form-control" id="employeeAlternativeNumber" name="employeeAlternativeNumber" placeholder="Enter Alternative Contact Number" >
                 </div>
 
                 <div class="form-group p-3">

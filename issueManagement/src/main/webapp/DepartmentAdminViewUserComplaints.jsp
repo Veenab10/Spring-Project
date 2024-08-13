@@ -51,7 +51,7 @@
                         <th>Description</th>
                         <th>User ID</th>
                         <th>Status</th>
-                        <th>Department Allocation</th>
+                        <th>Assign Employee</th>
                         <th>Submit</th>
                     </tr>
                 </thead>
@@ -70,7 +70,7 @@
                             <td>${departmentComplaints.description}</td>
                             <td>${departmentComplaints.userId.id}</td>
 
-                            <!---<form action="allocate-department" method="post">
+                            <form action="allocate-department" method="post">
                             <td >
                             <div style="width:110px;">
 
@@ -78,6 +78,7 @@
                             <option selected >${complaint.status}</option>
                             <option value="Pending">Pending</option>
                             <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
                             </select>
                             </div>
 
@@ -90,7 +91,7 @@
                                        </select>
                             </div>
 
-                            </td>---!>
+                            </td>
                             <td>
                              <button type="submit" class="btn btn-primary mt-2">submit</button>
                              </td>

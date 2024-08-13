@@ -73,7 +73,6 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService {
 
 
 
-
     @Override
     public List<RaiseComplaintDto> getComplaintsByUserId(int userId) {
         return raiseComplaintRepo.findByRaiseComplaint(userId);

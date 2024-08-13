@@ -114,18 +114,18 @@ public class DepartmentAdminDto {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
-    private DepartmentDto department;
+    private DepartmentDto departmentId;
 
 //    @ManyToOne(fetch = FetchType.LAZY) // Example mapping assuming many images to one signup
 //    @JoinColumn(name = "department_id", referencedColumnName = "department_id") // Adjust as per your schema
 //    private DepartmentDto department;
 
     public DepartmentDto getDepartment() {
-        return department;
+        return departmentId;
     }
 
-    public void setDepartment(DepartmentDto department) {
-        this.department = department;
+    public void setDepartmentId(DepartmentDto department) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -140,7 +140,7 @@ public class DepartmentAdminDto {
                 ", departmentAdminPassword='" + departmentAdminPassword + '\'' +
                 ", accountLocked=" + accountLocked +
                 ", failedAttempts=" + failedAttempts +
-                ", department=" + department +
+                ", departmentId=" + departmentId +
                 '}';
     }
 }
