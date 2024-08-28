@@ -1,38 +1,49 @@
 <%@ page isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Profile View</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </head>
 <body>
-     <nav class="navbar navbar-dark bg-primary">
-                 <div class="container-fluid">
-                     <div class="navbar-header">
-                 <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
 
-                 </div>
+<nav class="navbar navbar-dark bg-primary">
+            <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" style="color:white;" href="index.jsp">Home</a>
+            </div>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Admin
+                     <!---   <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="50" height="50" class="rounded-circle">---!>
+                    </button>
 
-         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
-         </button>
-
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="AdminProfile.jsp">AdminProfile</a></li>
-        </ul>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="view-user-details">Users Profile </a></li>
+                        <li><a class="dropdown-item" href="departmentAdmin-view-user-complaints">View User Complaints</a></li>
+                        <li><a class="dropdown-item" href="view-department-list">AddEmployees</a></li>
+                         <li><a class="dropdown-item" href="DepartmentAdminResetPassword.jsp">ResetPassword</a></li>
 
 
-  </nav>
+                    </ul>
+        </div>
+    </nav>
 
-  <div class="container mt-5 mb-5">
-          <div class="card">
-              <div class="card-header">
-                  <h3><b>View USer Profile</b></h3>
+<!-- Display Success Message -->
+<c:if test="${not empty successMessage}">
+    <div class="alert alert-success" role="alert">
+        ${successMessage}
+    </div>
+</c:if>
+
+  <!-- View of Raised Complaints -->
+  <div class="d-flex justify-content-center mt-3 mb-2 align-items-center vh-80">
+      <div class="card highlight-card">
+          <div class="card-body">
+                 <center> <h3><b>View USer Profile</b></h3> </center>
               </div>
               <div class="card-body">
                   <table class="table table-bordered">

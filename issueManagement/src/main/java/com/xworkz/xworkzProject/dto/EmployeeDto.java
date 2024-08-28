@@ -3,45 +3,47 @@ package com.xworkz.xworkzProject.dto;
 import javax.persistence.*;
 
 @Entity
-@Table(name="employee_details")
+@Table(name = "employee_details")
 public class EmployeeDto {
 
-    @Column(name = "employee_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeId;
+    @Column(name = "employee_id")
+    private int employeeId;
 
     @Column(name = "employee_name")
     private String employeeName;
 
+    @Column(name = "employee_designation")
+    private String designation;
+
     @Column(name = "employee_email")
-    private String email;
+    private String employeeEmail;
 
     @Column(name = "employee_password")
-    private String password;
+    private String  employeePassword;
 
     @Column(name = "employee_contact_number")
-    private Long contactNumber;
+    private String employeeContactNumber;
 
-    @Column(name = "employee_alternative_number")
-    private Long alternativeContactNumber;
+    @Column(name = "employee_address")
+    private String address;
 
-
-//    @Column(name = "")
-//    private String area;
-
-    @Column(name = "department_name")
+    @Column(name = "employee_department_name")
     private String departmentName;
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "departments_id", referencedColumnName = "department_id")
     private DepartmentDto departmentId;
 
-    public Long getEmployeeId() {
+    @Column(name = "employee_status")
+    private String status;
+
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -53,36 +55,28 @@ public class EmployeeDto {
         this.employeeName = employeeName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmployeeEmail() {
+        return employeeEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEmployeePassword() {
+        return employeePassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEmployeePassword(String employeePassword) {
+        this.employeePassword = employeePassword;
     }
 
-    public Long getContactNumber() {
-        return contactNumber;
+    public String getEmployeeContactNumber() {
+        return employeeContactNumber;
     }
 
-    public void setContactNumber(Long contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public Long getAlternativeContactNumber() {
-        return alternativeContactNumber;
-    }
-
-    public void setAlternativeContactNumber(Long alternativeContactNumber) {
-        this.alternativeContactNumber = alternativeContactNumber;
+    public void setEmployeeContactNumber(String employeeContactNumber) {
+        this.employeeContactNumber = employeeContactNumber;
     }
 
     public String getDepartmentName() {
@@ -101,17 +95,44 @@ public class EmployeeDto {
         this.departmentId = departmentId;
     }
 
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "EmployeeDto{" +
                 "employeeId=" + employeeId +
                 ", employeeName='" + employeeName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", contactNumber=" + contactNumber +
-                ", alternativeContactNumber=" + alternativeContactNumber +
+                ", designation='" + designation + '\'' +
+                ", employeeEmail='" + employeeEmail + '\'' +
+                ", employeePassword='" + employeePassword + '\'' +
+                ", employeeContactNumber='" + employeeContactNumber + '\'' +
+                ", address='" + address + '\'' +
                 ", departmentName='" + departmentName + '\'' +
                 ", departmentId=" + departmentId +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

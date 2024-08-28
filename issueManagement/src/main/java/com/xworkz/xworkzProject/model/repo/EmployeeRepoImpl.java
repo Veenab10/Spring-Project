@@ -1,6 +1,5 @@
 package com.xworkz.xworkzProject.model.repo;
 
-import com.xworkz.xworkzProject.dto.DepartmentAdminDto;
 import com.xworkz.xworkzProject.dto.EmployeeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

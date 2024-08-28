@@ -420,6 +420,18 @@ public class AdminServiceImpl implements AdminService {
         return Collections.emptyList();
     }
 
+    public List<EmployeeDto> getAllEmployeeDetails() {
+
+        return adminRepo.getAllEmployeeDetails(); // Retrieve all departments
+    }
+
+    @Override
+    public void allocateEmployee(Long complaintId, int employeeId, String status) {
+        System.out.println("Running  allocateEmployee method in adminserviceimpl...");
+        // Delegate the department allocation to the repository
+        adminRepo.allocateEmployee(complaintId,employeeId,status);
+    }
+
 
 }
 

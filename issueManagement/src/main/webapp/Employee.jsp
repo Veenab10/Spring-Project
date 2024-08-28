@@ -5,7 +5,7 @@
 <head>
     <title>Index</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="/issueManagement/js/Signup.js"></script>
+    <!---<script src="/issueManagement/js/Signup.js"></script>---!>
 </head>
 
 <body>
@@ -18,8 +18,11 @@
 <form action="save-employee-details" method="post">
     <div class="d-flex justify-content-center mt-3 mb-3 align-items-center vh-5">
         <div class="card" style="width: 30rem;">
+
             <div class="card-body">
                 <center><h5 class="card-title">Employee Form</h5></center>
+                 <strong style="color:green;">${successMsg}</strong>
+                 <strong style="color:red;">${failedMsg}</strong>
                 <strong style="color:green"><c:out value="${departmentadminsuccess}"/></strong>
                 <strong style="color:red"><c:out value="${departmentadminfailed}"/></strong>
                 <strong style="color:red"><c:out value="${successMessage}"/></strong>
@@ -31,8 +34,13 @@
                 </div>
 
                 <div class="form-group p-3">
+                     <label for="designation">Employee Designation</label>
+                      <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter Employee Designation" >
+                </div>
+
+                <div class="form-group p-3">
                     <label for="departmentType">Select Department</label>
-                    <select class="form-select" name="departmentType" id="departmentType">
+                    <select class="form-select" name="departmentName" id="departmentName">
                         <c:forEach var="department" items="${departments}">
                             <option value="${department.departmentName}">${department.departmentName}</option>
                         </c:forEach>
@@ -50,9 +58,12 @@
                 </div>
 
                 <div class="form-group p-3">
-                    <label for="employeeAlternativeNumber">Alternative Contact Number</label>
-                    <input type="text" class="form-control" id="employeeAlternativeNumber" name="employeeAlternativeNumber" placeholder="Enter Alternative Contact Number" >
-                </div>
+                                    <label for="address">Address</label>
+                                    <textarea class="form-control" placeholder="Enter address here" id="address" onblur="addressValidation()" name="address" ></textarea>
+                                    <span id="addressError"></span>
+                                </div>
+
+
 
                 <div class="form-group p-3">
                     <center><input type="submit" class="btn btn-primary" id="submit" name="submit" value="Submit"></center>

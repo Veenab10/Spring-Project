@@ -57,4 +57,9 @@ public interface AdminService {
     //List<DepartmentAdminDto> findByUserDepartmentAdminId();
 
     List<RaiseComplaintDto> findByUSerComplaintType(String complaintType);
+
+
+    List<EmployeeDto> getAllEmployeeDetails();
+
+    void allocateEmployee(Long complaintId, int employeeId, String status);
 }

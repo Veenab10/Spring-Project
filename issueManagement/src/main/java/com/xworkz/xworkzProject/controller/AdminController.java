@@ -37,8 +37,8 @@ public class AdminController {
             System.out.println("controller:Email ID and Passwords are exists" + "emailId" + adminEmailId + "password" + adminPassword);
             model.addAttribute("adminSuccess", "SignIn Successfully");
             return "AdminProfile";
-
-        } else {
+        }
+        else {
             System.out.println("controller:Dto is not present" + "emailId" + adminEmailId + "password" + adminPassword);
             model.addAttribute("adminError", "Failed to SignIn Successfully");
             return "AdminSignIn";
@@ -79,13 +79,19 @@ public class AdminController {
             System.out.println(viewRaiseComplaints);
             return "AdminViewUserComplaintDetails";
 
-
-        } else {
+        }
+        else {
             System.out.println("view-user-details not  successful in AdminController..");
             return "AdminViewUserComplaintDetails";
-
         }
 
+    }
+
+    @GetMapping("/view-department-lists")
+    public String viewDepartmentList(Model model){
+        List<DepartmentDto> departments = adminService.getAllDepartments();
+        model.addAttribute("departments",departments);
+        return "AdminViewUserComplaintDetails";
     }
 
     @PostMapping("/allocate-department")
@@ -97,7 +103,6 @@ public class AdminController {
     ) {
         try {
             System.out.println("Running allocate department");
-
             // Call the service method to allocate department
             adminService.allocateDepartment(complaintId, departmentId, status);
             System.out.println("complaintId" + complaintId);
@@ -144,7 +149,6 @@ public class AdminController {
 
         if (saveDepartment) {
             System.out.println("saveDepartment successfully");
-
             return "redirect:/department-profile";
 
         }
@@ -177,6 +181,7 @@ public class AdminController {
     public String saveDepartmentAdminDetails(DepartmentDto departmentDto, DepartmentAdminDto departmentAdminDto, Model model) {
         System.out.println("Running saveDepartmentAdmin in admin controller....");
         DepartmentDto resultDto = adminService.searchByDepartmentName(departmentAdminDto.getDepartmentType());
+        System.out.println("resultDto"+resultDto);
         departmentAdminDto.setDepartmentId(resultDto);
 
         boolean saved = adminService.saveDepartmentAdmin(departmentAdminDto);
@@ -240,7 +245,6 @@ public class AdminController {
             //session.setAttribute("department",departmentAdminDto);
             session.setAttribute("departmentAdmin", departmentAdminDto1.getDepartmentType());
 
-
             return "DepartmentAdminProfile";
 
         } else {
@@ -296,10 +300,46 @@ public class AdminController {
         HttpSession session = request.getSession();
         String departmentAdminDto = (String) session.getAttribute("departmentAdmin");
         List<RaiseComplaintDto> viewDepartmentComplaints = adminService.findByUSerComplaintType(departmentAdminDto);
+        List<EmployeeDto> employeeNames=adminService.getAllEmployeeDetails();
         model.addAttribute("viewDepartmentComplaints", viewDepartmentComplaints);
-
+        model.addAttribute("employeeNames",employeeNames);
         return "DepartmentAdminViewUserComplaints";
     }
+
+    @PostMapping("/allocate-employee")
+    public String allocateEmployee(@RequestParam("complaintId") Long complaintId,
+                                   @RequestParam("employeeId") int employeeId,
+                                   @RequestParam("status") String status,
+                                   Model model, RedirectAttributes redirectAttributes)
+    {
+        try {
+            System.out.println("Running allocateEmployee method in admin controller...");
+
+            // Call the service method to allocate department
+            adminService.allocateEmployee(complaintId, employeeId, status);
+            System.out.println("complaintId" + complaintId);
+            System.out.println("departmentId" + employeeId);
+            redirectAttributes.addFlashAttribute("successMessage", "Employee allocated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to allocate employee. Please try again.");
+            e.printStackTrace();
+        }
+        return "redirect:/view-complaints";
+    }
+
+    @GetMapping("view-complaints")
+    public String viewComplaints(Model model, HttpServletRequest request)
+    {
+        System.out.println("Running viewComplaints...");
+        HttpSession session = request.getSession();
+        String departmentAdminDto = (String) session.getAttribute("departmentAdmin");
+        List<RaiseComplaintDto> viewDepartmentComplaints = adminService.findByUSerComplaintType(departmentAdminDto);
+        List<EmployeeDto> employeeNames=adminService.getAllEmployeeDetails();
+        model.addAttribute("viewDepartmentComplaints", viewDepartmentComplaints);
+        model.addAttribute("employeeNames",employeeNames);
+        return "DepartmentAdminViewUserComplaints";
+    }
+
 }
 
 

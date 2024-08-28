@@ -50,5 +50,9 @@ public interface AdminRepo {
      List<RaiseComplaintDto> findByUSerComplaintType(String complaintType);
 
 
+    //to show list of employees name in the department  admin view user complaints
+    List<EmployeeDto> getAllEmployeeDetails();
+
+    void allocateEmployee(Long complaintId,int employeeId,String status);
 
 }

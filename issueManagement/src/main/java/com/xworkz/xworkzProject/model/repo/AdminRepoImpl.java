@@ -381,8 +381,68 @@ public class AdminRepoImpl implements  AdminRepo {
         return Collections.emptyList();
     }
 
+    @Override
+    public List<EmployeeDto> getAllEmployeeDetails() {
+        System.out.println("Running getAllEmployeeDetails method in admin repo implementation...");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            String query = "SELECT e FROM EmployeeDto e";
+            Query query1 = entityManager.createQuery(query);
+            List<EmployeeDto> resultList = query1.getResultList();
+            System.out.println("ResultList size: " + resultList.size());
+            return resultList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
 
+    @Override
+    public void allocateEmployee(Long complaintId, int employeeId, String status) {
+        System.out.println("Running allocateEmployee method in AdminRepoImpl...");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        try {
+            entityTransaction.begin();
 
+            // Find the complaint
+            RaiseComplaintDto complaint = entityManager.find(RaiseComplaintDto.class, complaintId);
+            if (complaint == null) {
+                throw new RuntimeException("Complaint not found for ID: " + complaintId);
+            }
+            System.out.println("Found complaint: " + complaint);
+
+            // Find the department
+            EmployeeDto employee = entityManager.find(EmployeeDto.class, employeeId);
+            if (employee == null) {
+                throw new RuntimeException("Department not found for ID: " + employeeId);
+            }
+            employee.setStatus(status);
+            System.out.println("Found department: " + employee);
+
+            // Set the department for the complaint
+            //complaint.setDepartment(department);
+            //complaint.setStatus(status);
+            complaint.setEmployeeId(employee);
+
+            // Merge the updated complaint
+            complaint = entityManager.merge(complaint);
+            System.out.println("Updated complaint after merge: " + complaint);
+
+            entityTransaction.commit();
+            System.out.println("Department allocated successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+        } finally {
+            entityManager.close();
+        }
+
+    }
 
 
 }
